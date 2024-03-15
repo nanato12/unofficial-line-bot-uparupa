@@ -11,3 +11,7 @@ lint:
 	flake8 .
 	isort .
 	mypy .
+
+.PHONY: run
+run:
+	python main.py -c default
