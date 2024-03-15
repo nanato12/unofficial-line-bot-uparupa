@@ -2,9 +2,9 @@ from typing import Any
 
 
 class SingletonMeta(type):
-    _instances: dict[Any, object] = {}
+    _instances: dict[Any, Any] = {}
 
-    def __call__(cls, *args: Any, **kwargs: Any) -> object:
+    def __call__(cls, *args: Any, **kwargs: Any) -> Any:
         if cls not in cls._instances:
             instance = super().__call__(*args, **kwargs)
             cls._instances[cls] = instance
