@@ -1,1 +1,3 @@
 git+https://github.com/line-bot-oss/CHRLINE.git@v1.0.3
+SQLAlchemy==2.0.28
+alembic==1.13.1
