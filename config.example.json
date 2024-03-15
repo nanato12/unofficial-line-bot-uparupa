@@ -1,0 +1,7 @@
+{
+    "default": {
+        "device": "IOSIPAD",
+        "token": "",
+        "log_name": "linebot"
+    }
+}
