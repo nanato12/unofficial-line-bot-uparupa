@@ -16,7 +16,9 @@ class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
 
     def __init__(self) -> None:
         super().__init__()
-        self.add_argument("-c", "--config-name", default="default", help="設定名")
+        self.add_argument(
+            "-c", "--config-name", default="default", help="設定名"
+        )
         self.add_argument("-d", "--device", help="デバイス名")
         self.add_argument("-t", "--token", help="トークン")
         self.add_argument("-l", "--log-name", help="ログファイル名")
