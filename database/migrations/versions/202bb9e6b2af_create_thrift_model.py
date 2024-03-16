@@ -1,8 +1,8 @@
 """create_thrift_model
 
-Revision ID: 3971e552cc88
+Revision ID: 202bb9e6b2af
 Revises: 
-Create Date: 2024-03-16 14:24:11.534138
+Create Date: 2024-03-16 15:22:45.994489
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '3971e552cc88'
+revision: str = '202bb9e6b2af'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -23,8 +23,8 @@ def upgrade() -> None:
     op.create_table('locations',
     sa.Column('title', sa.String(length=255), nullable=True),
     sa.Column('address', sa.Text(), nullable=False),
-    sa.Column('latitude', sa.Float(), nullable=False),
-    sa.Column('longitude', sa.Float(), nullable=False),
+    sa.Column('latitude', sa.Double(), nullable=False),
+    sa.Column('longitude', sa.Double(), nullable=False),
     sa.Column('phone', sa.String(length=30), nullable=True),
     sa.Column('category_id', sa.Integer(), nullable=True),
     sa.Column('provider', sa.String(length=255), nullable=True),

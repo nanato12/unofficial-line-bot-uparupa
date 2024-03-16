@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from CHRLINE.services.thrift.ttypes import Location as ThriftLocation
-from sqlalchemy import Float
+from sqlalchemy import Double
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
 
@@ -11,8 +11,8 @@ from database.engine import Base
 class Location(Base):
     title = Column(String(255))
     address = Column(Text, nullable=False)
-    latitude = Column(Float, nullable=False)
-    longitude = Column(Float, nullable=False)
+    latitude = Column(Double, nullable=False)
+    longitude = Column(Double, nullable=False)
     phone = Column(String(30))
     category_id = Column(Integer)
     provider = Column(String(255))
