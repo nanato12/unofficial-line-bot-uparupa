@@ -60,7 +60,8 @@ class Message(Base):
         m.content_metadata = msg.contentMetadata
         m.session_id = msg.sessionId
         m.message_id = msg.id
-        m.chunks = msg.chunks
+        # TODO: list[bytes] のため、使用不可
+        # m.chunks = msg.chunks
         m.relation_message_id = msg.relatedMessageId
         m.message_relation_type = msg.messageRelationType
         m.read_count = msg.readCount
