@@ -1,6 +1,3 @@
-from threading import Thread
-from time import sleep
-
 from CHRLINE import CHRLINE
 from CHRLINE.hooks import HooksTracer
 
@@ -19,11 +16,3 @@ class LINEBot(metaclass=SingletonMeta):
         self.bot = CHRLINE(parser.token, device=parser.device, useThrift=True)
         self.auth_token = self.bot.authToken
         self.tracer = HooksTracer(self.bot, prefixes=["/"])
-
-        t = Thread(target=self.noop)
-        t.daemon = True
-        t.start()
-
-    def noop(self) -> None:
-        self.bot.noop()
-        sleep(20)
