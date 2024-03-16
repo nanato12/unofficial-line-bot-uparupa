@@ -10,6 +10,8 @@ from linebot.models.flex_message import FlexMessage
 
 
 class BaseFlex(ABC):
+    __alt_text__ = "Flex Message"
+
     def get_flex_content(
         self, file_name: str = "flex.json", footer: bool = True
     ) -> dict[str, Any]:
@@ -22,7 +24,7 @@ class BaseFlex(ABC):
         return j
 
     def build_message(self) -> dict[str, Any]:
-        return FlexMessage(contents=self.build()).build()
+        return FlexMessage(self.__alt_text__, contents=self.build()).build()
 
     @staticmethod
     def __get_footer_content() -> dict[str, Any]:
