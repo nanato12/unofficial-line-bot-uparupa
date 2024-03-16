@@ -6,6 +6,7 @@ from CHRLINE.services.thrift.ttypes import (
     OpType,
 )
 
+from database.models.operation import Operation as OperationModel
 from linebot import LINEBot
 from linebot.logger import get_file_path_logger
 
@@ -37,3 +38,6 @@ class Op30Hook(HooksTracer):
             f"[アナウンス]\n追加した人: @!\nテキスト: {announcement.contents.text}",
             mids=[announcement.creatorMid],
         )
+
+        o = OperationModel.from_line_operation(op)
+        o.save()

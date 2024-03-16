@@ -12,9 +12,10 @@ line = LINEBot()
 tracer = line.tracer
 
 
-class Op26Hook(HooksTracer):
-    @tracer.Operation(OpType.RECEIVE_MESSAGE)
-    def receive_message(self, op: Operation, bot: CHRLINE) -> None:
-        tracer.trace(op.message, self.HooksType["Content"], bot)
+class Op65Hook(HooksTracer):
+    @tracer.Operation(OpType.NOTIFIED_DESTROY_MESSAGE)
+    def notified_destroy_message(self, op: Operation, bot: CHRLINE) -> None:
+        logger.info(op)
+
         o = OperationModel.from_line_operation(op)
         o.save()
