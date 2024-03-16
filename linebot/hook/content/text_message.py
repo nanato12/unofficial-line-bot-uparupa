@@ -25,6 +25,6 @@ class ContentHook(HooksTracer):
         if not user:
             c: Contact = bot.getContact(sender_mid)
             user = User.from_line_contact(c)
-            user.save()
+            user.create()
 
         logger.info(msg.text)

@@ -52,7 +52,7 @@ class Message(Base):
 
         if isinstance(msg.location, ThriftLocation):
             m.location = Location.from_line_location(msg.location)
-            m.location.save()
+            m.location.create()
 
         m.has_content = msg.hasContent
         m.content_type = msg.contentType

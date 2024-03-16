@@ -18,4 +18,4 @@ class Op55Hook(HooksTracer):
         logger.info(op)
 
         o = OperationModel.from_line_operation(op)
-        o.save()
+        o.create()

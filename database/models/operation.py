@@ -47,6 +47,6 @@ class Operation(Base):
 
         if isinstance(to.message, ThriftMessage):
             o.message = Message.from_line_message(to.message)
-            o.message.save()
+            o.message.create()
 
         return o

@@ -29,4 +29,4 @@ class Op124Hook(HooksTracer):
             bot.sendMention(gid, "@! 招待ありがとう♪", mids=[contact.mid])
 
         o = OperationModel.from_line_operation(op)
-        o.save()
+        o.create()

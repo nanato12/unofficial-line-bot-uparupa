@@ -18,4 +18,4 @@ class Op26Hook(HooksTracer):
         tracer.trace(op.message, self.HooksType["Content"], bot)
 
         o = OperationModel.from_line_operation(op)
-        o.save()
+        o.create()
