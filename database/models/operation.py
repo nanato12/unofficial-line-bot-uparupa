@@ -7,11 +7,13 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import BigInteger, Integer, String
 
-from database.engine import Base
+from database.engine import Base, Session
 from database.models.message import Message
 
 
 class Operation(Base):
+    query = Session.query_property()
+
     revision = Column(Integer, nullable=False)
     created_time = Column(BigInteger, nullable=False)
     type = Column(Integer, nullable=False)

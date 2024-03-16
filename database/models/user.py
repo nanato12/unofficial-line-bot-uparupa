@@ -10,11 +10,13 @@ from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 
 from constants.enums.authority import Authority
-from database.engine import Base
+from database.engine import Base, Session
 from linebot.config import Config as LINEBotConfig
 
 
 class User(Base):
+    query = Session.query_property()
+
     mid = Column(String(50), nullable=False)
     picture_status = Column(Text)
     level = Column(Integer, nullable=False, default=0)
