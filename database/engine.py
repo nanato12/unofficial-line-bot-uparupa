@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from inflection import pluralize
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declared_attr, scoped_session, sessionmaker
 from sqlalchemy.orm.decl_api import DeclarativeMeta
@@ -38,8 +38,9 @@ class BaseModel:
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     updated_at = Column(
         DateTime,
-        default=datetime.now(),
-        onupdate=datetime.now(),
+        server_default=text("CURRENT_TIMESTAMP"),
+        default=datetime.now,
+        onupdate=datetime.now,
         nullable=False,
     )
 
@@ -47,10 +48,13 @@ class BaseModel:
     def __tablename__(cls) -> str:
         return pluralize(cls.__name__.lower())  # type: ignore
 
-    def save(self) -> None:
+    def create(self) -> None:
         with Session() as session:
             session.add(self)
             session.commit()
+
+    def save(self) -> None:
+        Session.commit()
 
 
 Base: DeclarativeMeta = declarative_base(cls=BaseModel)
