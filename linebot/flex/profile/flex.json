@@ -14,7 +14,7 @@
             "contents": [
               {
                 "type": "span",
-                "text": "ランキング: "
+                "text": "Ranking : "
               },
               {
                 "type": "span",
@@ -121,6 +121,10 @@
                                 "align": "end",
                                 "color": "#00000088",
                                 "contents": [
+                                  {
+                                    "type": "span",
+                                    "text": "exp "
+                                  },
                                   {
                                     "type": "span",
                                     "text": "114,514"
