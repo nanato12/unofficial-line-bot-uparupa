@@ -1,1 +1,4 @@
 git+https://github.com/line-bot-oss/CHRLINE.git@v1.0.3
+SQLAlchemy==2.0.28
+inflection==0.5.1
+mysqlclient==2.2.4

@@ -131,3 +131,6 @@ dmypy.json
 # docker
 docker/mysql
 config.json
+
+# log
+logs

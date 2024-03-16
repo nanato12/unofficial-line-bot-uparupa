@@ -2,6 +2,12 @@
     "default": {
         "device": "IOSIPAD",
         "token": "",
-        "log_name": "linebot"
+        "log_name": "linebot",
+        "db_host": "127.0.0.1",
+        "db_port": "13307",
+        "db_user": "admin",
+        "db_password": "password",
+        "db_database": "nanato12_linebot",
+        "db_charset": "utf8mb4"
     }
 }
