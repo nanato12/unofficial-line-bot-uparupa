@@ -27,6 +27,4 @@ class ContentHook(HooksTracer):
             user = User.from_line_contact(c)
             user.save()
 
-        logger.info(user.profile_url)
-
         logger.info(msg.text)
