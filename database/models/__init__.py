@@ -1,1 +1,1 @@
-from database.models import location, message, operation  # noqa: F401
+from database.models import location, message, operation, user  # noqa: F401

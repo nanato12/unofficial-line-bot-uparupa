@@ -7,11 +7,13 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import JSON, BigInteger, Boolean, Integer, String, Text
 
-from database.engine import Base
+from database.engine import Base, Session
 from database.models.location import Location
 
 
 class Message(Base):
+    query = Session.query_property()
+
     _from = Column(String(50), name="from", nullable=False)
     to = Column(String(50), nullable=False)
     to_type = Column(Integer, nullable=False)
@@ -58,7 +60,8 @@ class Message(Base):
         m.content_metadata = msg.contentMetadata
         m.session_id = msg.sessionId
         m.message_id = msg.id
-        m.chunks = msg.chunks
+        # TODO: list[bytes] のため、使用不可
+        # m.chunks = msg.chunks
         m.relation_message_id = msg.relatedMessageId
         m.message_relation_type = msg.messageRelationType
         m.read_count = msg.readCount

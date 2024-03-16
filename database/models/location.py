@@ -5,10 +5,12 @@ from sqlalchemy import Double
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
 
-from database.engine import Base
+from database.engine import Base, Session
 
 
 class Location(Base):
+    query = Session.query_property()
+
     title = Column(String(255))
     address = Column(Text, nullable=False)
     latitude = Column(Double, nullable=False)

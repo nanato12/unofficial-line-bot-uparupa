@@ -134,3 +134,4 @@ config.json
 
 # log
 logs
+run.pid
