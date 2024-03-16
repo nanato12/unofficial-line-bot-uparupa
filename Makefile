@@ -15,3 +15,19 @@ lint:
 .PHONY: run
 run:
 	python main.py -c default
+
+.PHONY: gen_migration
+gen_migration:
+	alembic revision --autogenerate -m "${NAME}"
+
+.PHONY: migrate
+migrate:
+	alembic upgrade head
+
+.PHONY: migrate_history
+migrate_history:
+	alembic history
+
+.PHONY: rollback
+rollback:
+	alembic downgrade -1
