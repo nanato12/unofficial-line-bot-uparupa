@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from CHRLINE.config import Config
 from CHRLINE.services.thrift.ttypes import Contact as ThriftContact
-from sqlalchemy import Enum, Text
+from sqlalchemy import Enum, Text, text
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 
@@ -18,13 +18,19 @@ class User(Base):
     query = Session.query_property()
 
     mid = Column(String(50), nullable=False)
+    name = Column(
+        String(20), nullable=False, default="noname", server_default="noname"
+    )
     picture_status = Column(Text)
-    level = Column(Integer, nullable=False, default=0)
-    exp = Column(Integer, nullable=False, default=0)
+    level = Column(
+        Integer, nullable=False, default=0, server_default=text("0")
+    )
+    exp = Column(Integer, nullable=False, default=0, server_default=text("0"))
     authority = Column(
         Enum(Authority),
         nullable=False,
         default=Authority.NORMAL,
+        server_default=text(str(Authority.NORMAL)),
     )
 
     @property
