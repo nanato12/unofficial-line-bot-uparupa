@@ -5,7 +5,7 @@ from datetime import datetime
 from inflection import pluralize
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import declared_attr, sessionmaker
+from sqlalchemy.orm import declared_attr, scoped_session, sessionmaker
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, Integer
@@ -24,8 +24,13 @@ engine = create_engine(
     )
 )
 
-SessionClass = sessionmaker(engine)
-session = SessionClass()
+Session = scoped_session(
+    sessionmaker(
+        autocommit=False,
+        autoflush=True,
+        bind=engine,
+    )
+)
 
 
 class BaseModel:
@@ -43,8 +48,9 @@ class BaseModel:
         return pluralize(cls.__name__.lower())  # type: ignore
 
     def save(self) -> None:
-        session.add(self)
-        session.commit()
+        with Session() as session:
+            session.add(self)
+            session.commit()
 
 
 Base: DeclarativeMeta = declarative_base(cls=BaseModel)
