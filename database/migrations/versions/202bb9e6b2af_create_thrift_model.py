@@ -64,6 +64,9 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('operations',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.Column('revision', sa.Integer(), nullable=False),
     sa.Column('created_time', sa.BigInteger(), nullable=False),
     sa.Column('type', sa.Integer(), nullable=False),
@@ -75,9 +78,6 @@ def upgrade() -> None:
     sa.Column('param2', sa.String(length=255), nullable=True),
     sa.Column('param3', sa.String(length=255), nullable=True),
     sa.Column('message_id', sa.Integer(), nullable=True),
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['message_id'], ['messages.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
