@@ -16,5 +16,6 @@ class Op26Hook(HooksTracer):
     @tracer.Operation(OpType.RECEIVE_MESSAGE)
     def receive_message(self, op: Operation, bot: CHRLINE) -> None:
         tracer.trace(op.message, self.HooksType["Content"], bot)
+
         o = OperationModel.from_line_operation(op)
         o.save()
