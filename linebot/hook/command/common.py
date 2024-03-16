@@ -1,9 +1,11 @@
 from CHRLINE import CHRLINE
 from CHRLINE.hooks import HooksTracer
-from CHRLINE.services.thrift.ttypes import Message, MIDType
+from CHRLINE.services.thrift.ttypes import Contact, Message, MIDType
 
 from linebot import LINEBot
+from linebot.flex.profile import ProfileFlex
 from linebot.logger import get_file_path_logger
+from repository.user_repository import get_or_create_user_from_contact
 
 logger = get_file_path_logger(__name__)
 
@@ -12,7 +14,7 @@ tracer = line.tracer
 
 
 class CommonCommandHook(HooksTracer):
-    @tracer.Command(inpart=True)
+    @tracer.Command()
     def mid(self, msg: Message, bot: CHRLINE) -> None:
         """
         送信者のmidを送信します。
@@ -44,3 +46,17 @@ class CommonCommandHook(HooksTracer):
         """
 
         bot.replyMessage(msg, self.genHelp())
+
+    @tracer.Command(prefixes=False)
+    def プロフ(self, msg: Message, bot: CHRLINE) -> None:
+        """
+        プロフィールを送信します。
+        """
+
+        c: Contact = bot.getContact(str(msg._from))
+        u = get_or_create_user_from_contact(c)
+
+        bot.sendLiff(
+            msg.to,
+            ProfileFlex(u).build_message(),
+        )
