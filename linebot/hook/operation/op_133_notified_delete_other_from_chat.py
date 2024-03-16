@@ -14,7 +14,9 @@ tracer = line.tracer
 
 class Op133Hook(HooksTracer):
     @tracer.Operation(OpType.NOTIFIED_DELETE_OTHER_FROM_CHAT)
-    def notified_delete_other_from_chat(self, op: Operation, bot: CHRLINE) -> None:
+    def notified_delete_other_from_chat(
+        self, op: Operation, bot: CHRLINE
+    ) -> None:
         logger.info(op)
 
         o = OperationModel.from_line_operation(op)
