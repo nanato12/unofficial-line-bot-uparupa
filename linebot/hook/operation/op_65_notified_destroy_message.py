@@ -14,7 +14,7 @@ tracer = line.tracer
 
 class Op65Hook(HooksTracer):
     @tracer.Operation(OpType.NOTIFIED_DESTROY_MESSAGE)
-    def receive_announcement(self, op: Operation, bot: CHRLINE) -> None:
+    def notified_destroy_message(self, op: Operation, bot: CHRLINE) -> None:
         logger.info(op)
 
         o = OperationModel.from_line_operation(op)
