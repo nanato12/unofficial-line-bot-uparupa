@@ -1,0 +1,18 @@
+{
+  "type": "box",
+  "layout": "horizontal",
+  "contents": [
+    {
+      "type": "text",
+      "align": "center",
+      "text": "©︎2023 nanato12",
+      "size": "xxs",
+      "wrap": false,
+      "weight": "bold",
+      "gravity": "center",
+      "color": "#ffffff"
+    }
+  ],
+  "paddingAll": "3px",
+  "backgroundColor": "#263238"
+}
