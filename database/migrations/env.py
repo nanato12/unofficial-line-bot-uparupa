@@ -4,7 +4,6 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from database.engine import Base
-# マイグレーション作成のためにimportが必要
 from linebot.parser import ConfigParser
 
 # this is the Alembic Config object, which provides
@@ -63,7 +62,7 @@ def run_migrations_online() -> None:
     config.set_section_option("alembic", "DB_USER", c["db_user"])
     config.set_section_option("alembic", "DB_PASSWORD", c["db_password"])
     config.set_section_option("alembic", "DB_HOST", c["db_host"])
-    config.set_section_option("alembic", "DB_PORT", str(c["db_port"]))
+    config.set_section_option("alembic", "DB_PORT", c["db_port"])
     config.set_section_option("alembic", "DB_DATABASE", c["db_database"])
     config.set_section_option("alembic", "DB_CHARSET", c["db_charset"])
 
