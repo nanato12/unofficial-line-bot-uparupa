@@ -1,9 +1,17 @@
 [tool.black]
 line-length = 79
+exclude = '''
+(
+    venv
+    | .mypy_cache
+    | migrations
+)
+'''
 
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
+skip_glob = "database/migrations/versions/**"
 
 [tool.mypy]
 warn_return_any = true
