@@ -15,7 +15,7 @@ if [ -f "run.pid" ]; then
 fi
 
 # run bot
-nohup python main.py > nohup.log 2>&1 &
+nohup python main.py -c default > nohup.log 2>&1 &
 echo $! > run.pid
 
 echo "deploy success!";
