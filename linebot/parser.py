@@ -9,7 +9,6 @@ DEFAULT_CONFIG_JSON = "config.json"
 
 
 class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
-    config_name: str
     device: str = ""
     token: str = ""
     log_name: str = ""
@@ -22,9 +21,7 @@ class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
 
     def __init__(self) -> None:
         super().__init__()
-        self.add_argument(
-            "-c", "--config-name", default="default", help="設定名"
-        )
+        self.add_argument("-c", "--config-name", default="", help="設定名")
 
         # linebot arguments
         self.add_argument("-d", "--device", help="デバイス名")
@@ -70,16 +67,22 @@ class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
             if v is not None:
                 setattr(self, arg, v)
 
+        for var in self.class_vars.keys():
+            if var in ["token"]:
+                continue
+            if getattr(self, var) == "":
+                raise Exception(f"'{var}' argument variable not set.")
+
     def __parse_by_config(self, config_name: str) -> None:
         config = self.get_config_by_name(config_name)
 
-        self_vars: dict[str, type] = vars(self.__class__).get(
-            "__annotations__", {}
-        )
-
-        for var, t in self_vars.items():
+        for var, t in self.class_vars.items():
             if isinstance(v := config.get(var), t) and v:
                 setattr(self, var, v)
+
+    @property
+    def class_vars(self) -> dict[str, type]:
+        return vars(self.__class__).get("__annotations__", {})
 
     @staticmethod
     def get_config_by_name(config_name: str) -> dict[str, Any]:
