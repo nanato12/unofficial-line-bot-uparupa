@@ -43,6 +43,6 @@ class ProfileFlex(BaseFlex):
             "contents"
         ][0]["contents"][3][
             "text"
-        ] = f"{calc_need_exp(u.exp):,}"  # type: ignore
+        ] = f"{calc_need_exp(u.level):,}"  # type: ignore
 
         return content
