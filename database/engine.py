@@ -10,9 +10,9 @@ from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, Integer
 
-from linebot.parser import ConfigParser
+from linebot.helpers.config import get_config_by_name
 
-c = ConfigParser.get_config_by_name("default")
+c = get_config_by_name("default")
 engine = create_engine(
     "mysql://{user}:{password}@{host}:{port}/{database}?charset={charset}".format(
         user=c["db_user"],
@@ -35,12 +35,17 @@ Session = scoped_session(
 
 class BaseModel:
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(
+        DateTime,
+        default=datetime.now,
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
     updated_at = Column(
         DateTime,
-        server_default=text("CURRENT_TIMESTAMP"),
         default=datetime.now,
         onupdate=datetime.now,
+        server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
 
