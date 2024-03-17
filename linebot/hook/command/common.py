@@ -1,11 +1,10 @@
 from CHRLINE import CHRLINE
-from CHRLINE.services.thrift.ttypes import Contact, Message, MIDType
+from CHRLINE.services.thrift.ttypes import Message, MIDType
 
-from linebot.line import LINEBot
 from linebot.flex.profile import ProfileFlex
+from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
-from repository.user_repository import get_or_create_user_from_contact
 
 logger = get_file_path_logger(__name__)
 
@@ -53,10 +52,7 @@ class CommonCommandHook(HooksTracerWrapper):
         プロフィールを送信します。
         """
 
-        c: Contact = bot.getContact(str(msg._from))
-        u = get_or_create_user_from_contact(c)
-
         bot.sendLiff(
             msg.to,
-            ProfileFlex(u).build_message(),
+            ProfileFlex(self.user).build_message(),
         )
