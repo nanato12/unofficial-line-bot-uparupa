@@ -23,14 +23,14 @@ class User(Base):
     )
     picture_status = Column(Text)
     level = Column(
-        Integer, nullable=False, default=0, server_default=text("0")
+        Integer, nullable=False, default=1, server_default=text("1")
     )
     exp = Column(Integer, nullable=False, default=0, server_default=text("0"))
     authority = Column(
         Enum(Authority),
         nullable=False,
         default=Authority.NORMAL,
-        server_default=text(str(Authority.NORMAL)),
+        server_default=Authority.NORMAL.name,
     )
 
     @property
