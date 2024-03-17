@@ -1,9 +1,7 @@
-import json
 from argparse import ArgumentParser
-from os.path import exists as path_exists
-from typing import Any
 
 from design.singleton import SingletonMeta
+from linebot.helpers.config import get_config_by_name
 
 DEFAULT_CONFIG_JSON = "config.json"
 
@@ -74,7 +72,7 @@ class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
                 raise Exception(f"'{var}' argument variable not set.")
 
     def __parse_by_config(self, config_name: str) -> None:
-        config = self.get_config_by_name(config_name)
+        config = get_config_by_name(config_name)
 
         for var, t in self.class_vars.items():
             if isinstance(v := config.get(var), t) and v:
@@ -83,12 +81,3 @@ class ConfigParser(ArgumentParser, metaclass=SingletonMeta):
     @property
     def class_vars(self) -> dict[str, type]:
         return vars(self.__class__).get("__annotations__", {})
-
-    @staticmethod
-    def get_config_by_name(config_name: str) -> dict[str, Any]:
-        if not path_exists(DEFAULT_CONFIG_JSON):
-            raise FileNotFoundError(f"'{DEFAULT_CONFIG_JSON}' is not found.")
-
-        with open(DEFAULT_CONFIG_JSON) as f:
-            c: dict[str, dict[str, Any]] = json.load(f)
-        return c.get(config_name, {})
