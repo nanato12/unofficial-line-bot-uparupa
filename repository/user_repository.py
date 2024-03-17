@@ -7,7 +7,7 @@ from repository.exceptions import NotFoundRecordError
 
 
 def find_user_from_mid(mid: str) -> Optional[User]:
-    return User.query.filter(User.mid == mid).first()
+    return User.query.filter(User.mid == mid).first()  # type: ignore
 
 
 def get_user_from_mid(mid: str) -> User:
