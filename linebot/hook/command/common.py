@@ -1,10 +1,10 @@
 from CHRLINE import CHRLINE
-from CHRLINE.hooks import HooksTracer
 from CHRLINE.services.thrift.ttypes import Contact, Message, MIDType
 
-from linebot import LINEBot
+from linebot.line import LINEBot
 from linebot.flex.profile import ProfileFlex
 from linebot.logger import get_file_path_logger
+from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
 from repository.user_repository import get_or_create_user_from_contact
 
 logger = get_file_path_logger(__name__)
@@ -13,7 +13,7 @@ line = LINEBot()
 tracer = line.tracer
 
 
-class CommonCommandHook(HooksTracer):
+class CommonCommandHook(HooksTracerWrapper):
     @tracer.Command()
     def mid(self, msg: Message, bot: CHRLINE) -> None:
         """
