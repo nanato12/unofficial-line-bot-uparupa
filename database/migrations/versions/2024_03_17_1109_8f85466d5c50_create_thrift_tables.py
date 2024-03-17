@@ -1,8 +1,8 @@
-"""create_thrift_model
+"""create_thrift_tables
 
-Revision ID: ef530d25f498
+Revision ID: 8f85466d5c50
 Revises:
-Create Date: 2024-03-17 11:02:57.718447
+Create Date: 2024-03-17 11:09:21.580071
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'ef530d25f498'
+revision: str = '8f85466d5c50'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
