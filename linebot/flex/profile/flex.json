@@ -4,15 +4,199 @@
     {
       "type": "bubble",
       "size": "kilo",
-      "body": {
+      "header": {
         "type": "box",
         "layout": "vertical",
         "contents": [
           {
             "type": "text",
-            "text": "Profile test"
+            "align": "center",
+            "contents": [
+              {
+                "type": "span",
+                "text": "Ranking : "
+              },
+              {
+                "type": "span",
+                "text": "集計中",
+                "size": "xs"
+              }
+            ],
+            "size": "xs",
+            "weight": "bold",
+            "color": "#ffffff"
           }
-        ]
+        ],
+        "backgroundColor": "#263238",
+        "paddingAll": "7px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "image",
+                    "aspectMode": "cover",
+                    "size": "full",
+                    "align": "center",
+                    "url": "https://picture_url"
+                  }
+                ],
+                "cornerRadius": "1000px",
+                "width": "55px",
+                "borderColor": "#000000",
+                "borderWidth": "2px",
+                "height": "55px"
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "box",
+                        "layout": "vertical",
+                        "contents": [
+                          {
+                            "type": "text",
+                            "text": "名前",
+                            "weight": "bold",
+                            "align": "center",
+                            "size": "xs",
+                            "wrap": true
+                          }
+                        ],
+                        "flex": 7
+                      }
+                    ]
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "contents": [
+                                  {
+                                    "type": "span",
+                                    "text": "Lv. "
+                                  },
+                                  {
+                                    "type": "span",
+                                    "text": "999",
+                                    "weight": "bold"
+                                  }
+                                ],
+                                "size": "xs",
+                                "gravity": "center"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "text",
+                                "text": "experience",
+                                "align": "end",
+                                "color": "#00000088",
+                                "contents": [
+                                  {
+                                    "type": "span",
+                                    "text": "exp "
+                                  },
+                                  {
+                                    "type": "span",
+                                    "text": "114,514"
+                                  },
+                                  {
+                                    "type": "span",
+                                    "text": " / "
+                                  },
+                                  {
+                                    "type": "span",
+                                    "text": "200"
+                                  }
+                                ],
+                                "size": "xxs"
+                              }
+                            ],
+                            "width": "65%"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "box",
+                        "layout": "horizontal",
+                        "contents": [
+                          {
+                            "type": "box",
+                            "layout": "vertical",
+                            "contents": [
+                              {
+                                "type": "box",
+                                "layout": "vertical",
+                                "contents": [
+                                  {
+                                    "type": "filler"
+                                  }
+                                ],
+                                "width": "1%",
+                                "backgroundColor": "#428bca",
+                                "height": "6px"
+                              }
+                            ],
+                            "height": "6px",
+                            "backgroundColor": "#9FD8E36E",
+                            "borderColor": "#000000",
+                            "borderWidth": "1px",
+                            "cornerRadius": "5px"
+                          }
+                        ],
+                        "margin": "xs"
+                      }
+                    ],
+                    "margin": "sm"
+                  }
+                ],
+                "paddingStart": "10px"
+              }
+            ],
+            "margin": "md",
+            "borderWidth": "1px",
+            "borderColor": "#1E88E5",
+            "cornerRadius": "5px",
+            "paddingAll": "5px",
+            "paddingTop": "10px",
+            "paddingBottom": "10px",
+            "paddingStart": "10px",
+            "paddingEnd": "10px",
+            "backgroundColor": "#FFFFFF99"
+          }
+        ],
+        "paddingAll": "12px",
+        "paddingTop": "7px",
+        "backgroundColor": "#D3E5FC"
       }
     }
   ]

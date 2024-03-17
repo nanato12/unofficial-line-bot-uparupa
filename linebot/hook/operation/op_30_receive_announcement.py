@@ -7,7 +7,7 @@ from CHRLINE.services.thrift.ttypes import (
 )
 
 from database.models.operation import Operation as OperationModel
-from linebot import LINEBot
+from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 
 logger = get_file_path_logger(__name__)
@@ -40,4 +40,4 @@ class Op30Hook(HooksTracer):
         )
 
         o = OperationModel.from_line_operation(op)
-        o.save()
+        o.create()

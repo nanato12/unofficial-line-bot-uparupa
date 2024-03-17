@@ -5,7 +5,7 @@ from sqlalchemy import engine_from_config, pool
 
 from database import models
 from database.engine import Base
-from linebot.parser import ConfigParser
+from linebot.helpers.config import get_config_by_name
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -59,7 +59,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    c = ConfigParser.get_config_by_name("default")
+    c = get_config_by_name("default")
     config.set_section_option("alembic", "DB_USER", c["db_user"])
     config.set_section_option("alembic", "DB_PASSWORD", c["db_password"])
     config.set_section_option("alembic", "DB_HOST", c["db_host"])

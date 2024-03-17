@@ -1,15 +1,15 @@
 from CHRLINE import CHRLINE
-from CHRLINE.hooks import HooksTracer
 
 from design.singleton import SingletonMeta
 from linebot.config import Config
 from linebot.parser import ConfigParser
+from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
 
 
 class LINEBot(metaclass=SingletonMeta):
     auth_token: str
     bot: CHRLINE
-    tracer: HooksTracer
+    tracer: HooksTracerWrapper
 
     def __init__(self) -> None:
         parser: ConfigParser = ConfigParser()
@@ -20,4 +20,4 @@ class LINEBot(metaclass=SingletonMeta):
         for mid in Config.ADMINS:
             self.bot.sendMessage(mid, "起動したよ♪")
 
-        self.tracer = HooksTracer(self.bot, prefixes=["/"])
+        self.tracer = HooksTracerWrapper(self.bot, prefixes=["/"])

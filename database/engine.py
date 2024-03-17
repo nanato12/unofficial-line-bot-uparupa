@@ -3,16 +3,16 @@ from __future__ import annotations
 from datetime import datetime
 
 from inflection import pluralize
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declared_attr, scoped_session, sessionmaker
 from sqlalchemy.orm.decl_api import DeclarativeMeta
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, Integer
 
-from linebot.parser import ConfigParser
+from linebot.helpers.config import get_config_by_name
 
-c = ConfigParser.get_config_by_name("default")
+c = get_config_by_name("default")
 engine = create_engine(
     "mysql://{user}:{password}@{host}:{port}/{database}?charset={charset}".format(
         user=c["db_user"],
@@ -35,11 +35,17 @@ Session = scoped_session(
 
 class BaseModel:
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    created_at = Column(DateTime, default=datetime.now(), nullable=False)
+    created_at = Column(
+        DateTime,
+        default=datetime.now,
+        server_default=text("CURRENT_TIMESTAMP"),
+        nullable=False,
+    )
     updated_at = Column(
         DateTime,
-        default=datetime.now(),
-        onupdate=datetime.now(),
+        default=datetime.now,
+        onupdate=datetime.now,
+        server_default=text("CURRENT_TIMESTAMP"),
         nullable=False,
     )
 
@@ -47,10 +53,13 @@ class BaseModel:
     def __tablename__(cls) -> str:
         return pluralize(cls.__name__.lower())  # type: ignore
 
-    def save(self) -> None:
+    def create(self) -> None:
         with Session() as session:
             session.add(self)
             session.commit()
+
+    def save(self) -> None:
+        Session.commit()
 
 
 Base: DeclarativeMeta = declarative_base(cls=BaseModel)

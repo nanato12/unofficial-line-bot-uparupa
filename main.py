@@ -3,7 +3,7 @@ from logging.handlers import TimedRotatingFileHandler
 from os import makedirs
 
 from linebot import hook  # noqa: F401
-from linebot import LINEBot
+from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.parser import ConfigParser
 
