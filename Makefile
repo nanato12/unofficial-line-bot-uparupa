@@ -7,6 +7,7 @@ init:
 
 .PHONY: lint
 lint:
+	rm -rf .mypy_cache
 	black .
 	flake8 .
 	isort .
