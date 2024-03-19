@@ -135,3 +135,6 @@ config.json
 # log
 logs
 run.pid
+
+# test
+/*test*.py
