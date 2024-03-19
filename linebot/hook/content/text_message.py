@@ -34,7 +34,7 @@ class ContentHook(HooksTracerWrapper):
 
         if not self.user.can_give_exp(str(msg.text), str(msg.to)):
             if self.user.give_exp():
-                if self.user.level % 5 == 0 or self.user.level > 100:  # type: ignore
+                if self.user.level % 5 == 0 or self.user.level > 100:
                     bot.replyMessage(
                         msg, f"レベルが「{self.user.level}」に上がったよ！"
                     )

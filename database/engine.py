@@ -52,7 +52,7 @@ class BaseModel:
 
     @declared_attr.directive
     def __tablename__(cls) -> str:
-        return pluralize(cls.__name__.lower())  # type: ignore
+        return pluralize(cls.__name__.lower())  # type: ignore[no-any-return, attr-defined]
 
     def create(self) -> None:
         with Session() as session:

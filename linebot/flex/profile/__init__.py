@@ -45,10 +45,15 @@ class ProfileFlex(BaseFlex):
         ][0]["contents"][1]["text"] = f"{u.exp:,}"
 
         # need exp
+        need_exp = calc_need_exp(u.level)
         profile_content[1]["contents"][1]["contents"][0]["contents"][1][
             "contents"
-        ][0]["contents"][3][
-            "text"
-        ] = f"{calc_need_exp(u.level):,}"  # type: ignore
+        ][0]["contents"][3]["text"] = f"{need_exp:,}"
+
+        # exp meter
+        exp_percent = int(u.exp / need_exp * 100)
+        profile_content[1]["contents"][1]["contents"][1]["contents"][0][
+            "contents"
+        ][0]["width"] = f"{exp_percent}%"
 
         return content

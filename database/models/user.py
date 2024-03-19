@@ -42,6 +42,16 @@ class User(Base):
         self.level = 1
         self.exp = 0
 
+    def __lt__(self, u: User) -> bool:
+        if self.level != u.level:
+            return self.level < u.level  # type: ignore[no-any-return]
+        if self.exp != u.exp:
+            return self.exp < u.exp  # type: ignore[no-any-return]
+        return self.created_at < u.created_at  # type: ignore[no-any-return]
+
+    def __gt__(self, u: User) -> bool:
+        return not self.__lt__(u)
+
     @property
     def profile_url(self) -> Optional[str]:
         if self.picture_status is None:
@@ -67,8 +77,8 @@ class User(Base):
             list(
                 map(
                     lambda u: u.mid,
-                    User.query.order_by(desc(User.level))  # type: ignore
-                    .order_by(desc(User.exp))  # type: ignore
+                    User.query.order_by(desc(User.level))
+                    .order_by(desc(User.exp))
                     .order_by(desc(User.created_at))
                     .all(),
                 )
@@ -104,8 +114,8 @@ class User(Base):
             exp = random_exp()
 
         self.exp += exp
-        while self.exp >= calc_need_exp((self.level)):  # type: ignore
-            self.exp -= calc_need_exp(self.level)  # type: ignore
+        while self.exp >= calc_need_exp((self.level)):
+            self.exp -= calc_need_exp(self.level)
             self.level += 1
             result = True
         self.save()
