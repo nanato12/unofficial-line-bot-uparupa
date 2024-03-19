@@ -1,5 +1,10 @@
 from CHRLINE import CHRLINE
-from CHRLINE.services.thrift.ttypes import Contact, ContentType, Message
+from CHRLINE.services.thrift.ttypes import (
+    Contact,
+    ContentType,
+    Message,
+    MIDType,
+)
 
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
@@ -22,3 +27,14 @@ class ContentHook(HooksTracerWrapper):
             return
 
         logger.info(msg.text)
+
+        # グループの場合。経験値考慮
+        if msg.toType != MIDType.GROUP:
+            return
+
+        if not self.user.can_give_exp(str(msg.text), str(msg.to)):
+            if self.user.give_exp():
+                if self.user.level % 5 == 0 or self.user.level > 100:  # type: ignore
+                    bot.replyMessage(
+                        msg, f"レベルが「{self.user.level}」に上がったよ！"
+                    )
