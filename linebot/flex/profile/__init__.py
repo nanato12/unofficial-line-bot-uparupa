@@ -21,7 +21,8 @@ class ProfileFlex(BaseFlex):
         ]
 
         # icon
-        profile_content[0]["contents"][0]["url"] = u.profile_url
+        if u.profile_url:
+            profile_content[0]["contents"][0]["url"] = u.profile_url
 
         # name
         profile_content[1]["contents"][0]["contents"][0]["contents"][0][
