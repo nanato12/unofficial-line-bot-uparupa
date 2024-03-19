@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Any, Optional
 from urllib.parse import urljoin
 
 from CHRLINE.config import Config
@@ -36,7 +36,7 @@ class User(Base):
         server_default=Authority.NORMAL.name,
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(Base, self).__init__(*args, **kwargs)  # type: ignore
         self.name = "noname"
         self.level = 1
