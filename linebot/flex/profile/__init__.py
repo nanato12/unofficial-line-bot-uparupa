@@ -20,6 +20,11 @@ class ProfileFlex(BaseFlex):
             "contents"
         ]
 
+        # ranking
+        content["contents"][0]["header"]["contents"][0]["contents"][1][
+            "text"
+        ] = str(u.ranking)
+
         # icon
         if u.profile_url:
             profile_content[0]["contents"][0]["url"] = u.profile_url
