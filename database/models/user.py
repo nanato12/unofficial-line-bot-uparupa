@@ -44,10 +44,10 @@ class User(Base):
 
     def __lt__(self, u: User) -> bool:
         if self.level != u.level:
-            return self.level < u.level
+            return self.level < u.level  # type: ignore[no-any-return]
         if self.exp != u.exp:
-            return self.exp < u.exp
-        return self.created_at < u.created_at
+            return self.exp < u.exp  # type: ignore[no-any-return]
+        return self.created_at < u.created_at  # type: ignore[no-any-return]
 
     def __gt__(self, u: User) -> bool:
         return not self.__lt__(u)
