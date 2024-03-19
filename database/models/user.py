@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from CHRLINE.config import Config
 from CHRLINE.services.thrift.ttypes import Contact as ThriftContact
-from sqlalchemy import Enum, Text, text
+from sqlalchemy import Enum, Text, desc, text
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 
@@ -60,6 +60,21 @@ class User(Base):
         if tc.mid in LINEBotConfig.ADMINS:
             u.authority = Authority.ADMIN
         return u
+
+    @property
+    def ranking(self) -> int:
+        return (
+            list(
+                map(
+                    lambda u: u.mid,
+                    User.query.order_by(desc(User.level))  # type: ignore
+                    .order_by(desc(User.exp))  # type: ignore
+                    .order_by(desc(User.created_at))
+                    .all(),
+                )
+            ).index(self.mid)
+            + 1
+        )
 
     def can_give_exp(self, text: str, gid: str) -> bool:
         last_message = find_user_group_last_message(str(self.mid), gid)
