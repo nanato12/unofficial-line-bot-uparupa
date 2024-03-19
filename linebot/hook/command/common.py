@@ -46,8 +46,8 @@ class CommonCommandHook(HooksTracerWrapper):
 
         bot.replyMessage(msg, self.genHelp())
 
-    @tracer.Command(prefixes=False)
-    def プロフ(self, msg: Message, bot: CHRLINE) -> None:
+    @tracer.Command(prefixes=False, alt=["プロフィール", "プロフ"])
+    def profile(self, msg: Message, bot: CHRLINE) -> None:
         """
         プロフィールを送信します。
         """
