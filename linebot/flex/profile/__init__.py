@@ -47,8 +47,6 @@ class ProfileFlex(BaseFlex):
         # need exp
         profile_content[1]["contents"][1]["contents"][0]["contents"][1][
             "contents"
-        ][0]["contents"][3][
-            "text"
-        ] = f"{calc_need_exp(u.level):,}"  # type: ignore
+        ][0]["contents"][3]["text"] = f"{calc_need_exp(u.level):,}"
 
         return content
