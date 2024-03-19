@@ -28,6 +28,7 @@ Session = scoped_session(
     sessionmaker(
         autocommit=False,
         autoflush=True,
+        expire_on_commit=False,
         bind=engine,
     )
 )
