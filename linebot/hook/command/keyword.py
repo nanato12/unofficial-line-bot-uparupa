@@ -1,5 +1,6 @@
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message
+from networkx import hoffman_singleton_graph
 
 from database.models.keyword import Keyword
 from linebot.line import LINEBot
@@ -28,13 +29,17 @@ class KeywordCommandHook(HooksTracerWrapper):
                 msg, "不正なコマンドです！\n\nキーワード登録 テキスト:返信"
             )
             return
-        if len(text) < 3:
-            bot.replyMessage(msg, "返信テキストは3文字以上で登録してね！")
-            return
 
         targets = [s.strip() for s in text[text.index(" ") :].split(":")]
         receive_text = targets[0]
         reply_text = targets[1]
+
+        if len(receive_text) < 3 or len(reply_text) < 1:
+            bot.replyMessage(
+                msg,
+                "テキストは3文字以上、返信は1文字以上で登録してね！",
+            )
+            return
 
         if check_registration_keyword(self.user, receive_text):
             bot.replyMessage(
