@@ -25,11 +25,11 @@ class User(Base):
         String(20), nullable=False, default="noname", server_default="noname"
     )
     picture_status = Column(Text)
-    level = Column(
+    level: int = Column(
         Integer, nullable=False, default=1, server_default=text("1")
     )
     exp = Column(Integer, nullable=False, default=0, server_default=text("0"))
-    authority = Column(
+    authority: Authority = Column(
         Enum(Authority),
         nullable=False,
         default=Authority.NORMAL,
