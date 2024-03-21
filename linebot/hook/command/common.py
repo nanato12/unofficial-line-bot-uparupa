@@ -1,3 +1,5 @@
+from json import loads as json_loads
+
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message, MIDType
 
@@ -61,7 +63,7 @@ class CommonCommandHook(HooksTracerWrapper):
             )
         )
 
-        if r.get("status") != "ok":
+        if json_loads(r).get("status") != "ok":
             u: User = self.user
             bot.replyMessage(
                 msg,
