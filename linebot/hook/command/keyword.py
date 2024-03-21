@@ -1,6 +1,5 @@
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message
-from networkx import hoffman_singleton_graph
 
 from database.models.keyword import Keyword
 from linebot.line import LINEBot
