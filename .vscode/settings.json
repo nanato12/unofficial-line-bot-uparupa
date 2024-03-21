@@ -5,6 +5,7 @@
         "reportGeneralTypeIssues": "none",
         "reportReturnType": "none",
         "reportArgumentType": "none",
-        "reportAttributeAccessIssue": "none"
+        "reportAttributeAccessIssue": "none",
+        "reportAssignmentType": "none"
     }
 }
