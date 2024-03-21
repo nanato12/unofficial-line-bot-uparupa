@@ -36,6 +36,29 @@
         "contents": [
           {
             "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "管理者",
+                "align": "center",
+                "color": "#FFFFFFDD",
+                "weight": "bold"
+              }
+            ],
+            "cornerRadius": "5px",
+            "paddingAll": "3px",
+            "background": {
+              "type": "linearGradient",
+              "angle": "30deg",
+              "startColor": "#3C8CE7",
+              "endColor": "#00EAFF"
+            },
+            "borderWidth": "1px",
+            "borderColor": "#1E88E5"
+          },
+          {
+            "type": "box",
             "layout": "horizontal",
             "contents": [
               {
@@ -161,7 +184,6 @@
                                     "type": "filler"
                                   }
                                 ],
-                                "width": "1%",
                                 "backgroundColor": "#428bca",
                                 "height": "6px"
                               }

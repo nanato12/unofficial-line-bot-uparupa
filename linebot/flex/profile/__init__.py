@@ -4,6 +4,9 @@ from typing import Any
 from database.models.user import User
 from linebot.flex import BaseFlex
 from linebot.helpers.calculation import calc_need_exp
+from linebot.logger import get_file_path_logger
+
+logger = get_file_path_logger(__name__)
 
 
 @dataclass
@@ -16,14 +19,24 @@ class ProfileFlex(BaseFlex):
         content = self.get_flex_content()
         u: User = self.user
 
-        profile_content = content["contents"][0]["body"]["contents"][0][
-            "contents"
-        ]
-
         # ranking
         content["contents"][0]["header"]["contents"][0]["contents"][1][
             "text"
         ] = str(u.ranking)
+
+        budge_content = content["contents"][0]["body"]["contents"][0]
+
+        # Authority name
+        budge_content["contents"][0]["text"] = u.authority.name
+
+        # Gradiention color
+        start_color, end_color = u.authority.flex_colors
+        budge_content["background"]["startColor"] = start_color
+        budge_content["background"]["endColor"] = end_color
+
+        profile_content = content["contents"][0]["body"]["contents"][1][
+            "contents"
+        ]
 
         # icon
         if u.profile_url:
