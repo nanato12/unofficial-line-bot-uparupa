@@ -52,7 +52,9 @@ class CommonCommandHook(HooksTracerWrapper):
         プロフィールを送信します。
         """
 
-        bot.sendLiff(
-            msg.to,
-            ProfileFlex(self.user).build_message(),
+        logger.info(
+            bot.sendLiff(
+                msg.to,
+                ProfileFlex(self.user).build_message(),
+            )
         )
