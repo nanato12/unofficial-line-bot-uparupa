@@ -1,7 +1,11 @@
+from json import loads as json_loads
+
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message, MIDType
 
+from database.models.user import User
 from linebot.flex.profile import ProfileFlex
+from linebot.helpers.calculation import calc_need_exp
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
@@ -53,8 +57,20 @@ class CommonCommandHook(HooksTracerWrapper):
         """
 
         logger.info(
-            bot.sendLiff(
+            r := bot.sendLiff(
                 msg.to,
                 ProfileFlex(self.user).build_message(),
             )
         )
+
+        if json_loads(r).get("status") != "ok":
+            u: User = self.user
+            bot.replyMessage(
+                msg,
+                (
+                    f"Ranking: {u.ranking}\n"
+                    f"権限: {u.authority.name}\n"
+                    f"レベル: {u.level}\n"
+                    f"経験値: {u.exp:,} / {calc_need_exp(u.level):,}"
+                ),
+            )
