@@ -25,11 +25,11 @@ class User(Base):
         String(20), nullable=False, default="noname", server_default="noname"
     )
     picture_status = Column(Text)
-    level = Column(
+    level: int = Column(
         Integer, nullable=False, default=1, server_default=text("1")
     )
     exp = Column(Integer, nullable=False, default=0, server_default=text("0"))
-    authority = Column(
+    authority: Authority = Column(
         Enum(Authority),
         nullable=False,
         default=Authority.NORMAL,
@@ -43,6 +43,8 @@ class User(Base):
         self.exp = 0
 
     def __lt__(self, u: User) -> bool:
+        if self.authority != u.authority:
+            return self.authority < u.authority  # type: ignore[no-any-return]
         if self.level != u.level:
             return self.level < u.level  # type: ignore[no-any-return]
         if self.exp != u.exp:

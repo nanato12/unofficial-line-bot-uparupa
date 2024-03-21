@@ -3,7 +3,7 @@ from typing import Optional
 from CHRLINE.services.thrift.ttypes import Contact
 
 from database.models.user import User
-from repository.exceptions import NotFoundRecordError
+from linebot.exceptions.sql_error import NotFoundRecordError
 
 
 def find_user_from_mid(mid: str) -> Optional[User]:

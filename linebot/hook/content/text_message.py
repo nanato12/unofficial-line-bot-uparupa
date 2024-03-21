@@ -9,6 +9,10 @@ from CHRLINE.services.thrift.ttypes import (
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from repository.keyword_repository import (
+    choice_keyword,
+    find_keywords_from_receive_text,
+)
 from repository.user_repository import get_or_create_user_from_contact
 
 logger = get_file_path_logger(__name__)
@@ -28,9 +32,18 @@ class ContentHook(HooksTracerWrapper):
 
         logger.info(msg.text)
 
-        # グループの場合。経験値考慮
+        # グループ以外はスルー
         if msg.toType != MIDType.GROUP:
             return
+
+        if keywords := find_keywords_from_receive_text(msg.text):
+            if k := choice_keyword(keywords):
+                if k.reply_text:
+                    bot.replyMessage(msg, k.reply_text)
+                if k.reply_image_path:
+                    bot.sendImage(msg.to, k.reply_image_path)
+                if k.reply_voice_path:
+                    bot.sendAudio(msg.to, k.reply_voice_path)
 
         if not self.user.can_give_exp(str(msg.text), str(msg.to)):
             if self.user.give_exp():
