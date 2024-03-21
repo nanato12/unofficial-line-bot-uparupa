@@ -1,1 +1,1 @@
-from linebot.hook.command import common  # noqa: F401
+from linebot.hook.command import common, keyword  # noqa: F401
