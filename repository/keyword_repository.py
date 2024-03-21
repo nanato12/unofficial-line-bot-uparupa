@@ -7,7 +7,7 @@ from database.models.user import User
 
 
 def find_keywords_from_receive_text(s: str) -> list[Keyword]:
-    return Keyword.query.filter(Keyword.receive_text == s).all()
+    return Keyword.query.filter(Keyword.receive_text == s).all()  # type: ignore[no-any-return]
 
 
 def extract_admin_keyword(keywords: list[Keyword]) -> Optional[Keyword]:
@@ -16,6 +16,7 @@ def extract_admin_keyword(keywords: list[Keyword]) -> Optional[Keyword]:
     ]
     if admin_keywords:
         return admin_keywords[0]
+    return None
 
 
 def choice_keyword(keywords: list[Keyword]) -> Optional[Keyword]:
@@ -38,7 +39,7 @@ def choice_keyword(keywords: list[Keyword]) -> Optional[Keyword]:
     weights = [u.authority * u.level for u in users]
 
     # Noneの重み
-    keywords.append(None)
+    keywords.append(None)  # type: ignore[arg-type]
     weights.append(int(sum(weights) / 2))
 
     return choices(keywords, weights=weights)[0]
