@@ -1,8 +1,8 @@
 """create_keywords_table
 
-Revision ID: e84d4650aefa
+Revision ID: 41cc5b0b7475
 Revises: 6dd7e98301ba
-Create Date: 2024-03-21 11:56:30.192824
+Create Date: 2024-03-21 12:33:03.005059
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e84d4650aefa'
+revision: str = '41cc5b0b7475'
 down_revision: Union[str, None] = '6dd7e98301ba'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,6 +26,8 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.Column('receive_text', sa.Text(), nullable=False),
     sa.Column('reply_text', sa.Text(), nullable=False),
+    sa.Column('reply_voice_path', sa.Text(), nullable=True),
+    sa.Column('reply_image_path', sa.Text(), nullable=True),
     sa.Column('registrant_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['registrant_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

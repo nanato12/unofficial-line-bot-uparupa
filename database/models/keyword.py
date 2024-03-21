@@ -13,6 +13,8 @@ class Keyword(Base):
 
     receive_text = Column(Text, nullable=False)
     reply_text = Column(Text, nullable=False)
+    reply_voice_path = Column(Text)
+    reply_image_path = Column(Text)
 
     # ForeignKey
     registrant_id = Column(Integer, ForeignKey("users.id"))
