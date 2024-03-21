@@ -1,6 +1,6 @@
 #! /bin/bash
 
-git pull;
+git pull
 
 # activate python venv
 . venv/bin/activate
@@ -11,11 +11,11 @@ pip install -r requirements.txt
 alembic upgrade head
 
 if [ -f "run.pid" ]; then
-    kill $(cat run.pid);
+    kill $(cat run.pid)
 fi
 
 # run bot
-nohup python main.py -c default > nohup.log 2>&1 &
-echo $! > run.pid
+nohup python main.py -c default >"logs/$(date +"nohup_%Y%m%d_%H%M%S").log" 2>&1 &
+echo $! >run.pid
 
-echo "deploy success!";
+echo "deploy success!"
