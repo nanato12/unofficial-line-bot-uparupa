@@ -43,6 +43,8 @@ class User(Base):
         self.exp = 0
 
     def __lt__(self, u: User) -> bool:
+        if self.authority != u.authority:
+            return self.authority < u.authority  # type: ignore[no-any-return]
         if self.level != u.level:
             return self.level < u.level  # type: ignore[no-any-return]
         if self.exp != u.exp:
