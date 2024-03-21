@@ -185,7 +185,8 @@
                                   }
                                 ],
                                 "backgroundColor": "#428bca",
-                                "height": "6px"
+                                "height": "6px",
+                                "width": "30%"
                               }
                             ],
                             "height": "6px",
