@@ -1,0 +1,2 @@
+class UparupaError(Exception):
+    pass
