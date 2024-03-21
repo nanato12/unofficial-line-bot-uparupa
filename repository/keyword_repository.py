@@ -45,6 +45,14 @@ def choice_keyword(keywords: list[Keyword]) -> Optional[Keyword]:
     return choices(keywords, weights=weights)[0]
 
 
-def check_registration_keyword(u: User, text: str) -> bool:
+def find_keyword_from_user_and_text(u: User, text: str) -> Optional[Keyword]:
     keywords: list[Keyword] = u.keywords
-    return bool(list(filter(lambda x: x.receive_text == text, keywords)))
+    if filtered_keywords := list(
+        filter(lambda x: x.receive_text == text, keywords)
+    ):
+        return filtered_keywords[0]
+    return None
+
+
+def check_registration_keyword(u: User, text: str) -> bool:
+    return bool(find_keyword_from_user_and_text(u, text))
