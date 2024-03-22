@@ -50,7 +50,4 @@ class ContentHook(HooksTracerWrapper):
         u = get_or_create_user_from_mid(msg._from, bot)
         if u.can_give_exp(str(msg.text), str(msg.to)):
             if u.give_exp():
-                if u.level % 5 == 0 or u.level > 100:
-                    bot.replyMessage(
-                        msg, f"レベルが「{u.level}」に上がったよ！"
-                    )
+                bot.replyMessage(msg, f"レベルが「{u.level}」に上がったよ！")

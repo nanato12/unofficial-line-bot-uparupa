@@ -1,0 +1,126 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "size": "kilo",
+      "header": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "ランキング",
+            "weight": "bold",
+            "align": "center",
+            "color": "#ffffff",
+            "size": "xs"
+          }
+        ],
+        "backgroundColor": "#263238",
+        "paddingAll": "7px"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "50",
+                    "align": "center",
+                    "gravity": "center",
+                    "weight": "bold",
+                    "size": "xs"
+                  }
+                ],
+                "width": "25px"
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "image",
+                    "url": "https://via.placeholder.com/240x240.png/cccccc?text=NoImage",
+                    "aspectMode": "cover"
+                  }
+                ],
+                "width": "45px",
+                "height": "45px",
+                "cornerRadius": "5px",
+                "borderColor": "#888888",
+                "borderWidth": "1px"
+              },
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "hello, world",
+                        "weight": "bold"
+                      }
+                    ],
+                    "margin": "4px"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "レベル: ",
+                        "size": "xxs",
+                        "contents": [
+                          {
+                            "type": "span",
+                            "text": "レベル "
+                          },
+                          {
+                            "type": "span",
+                            "text": "100"
+                          },
+                          {
+                            "type": "span",
+                            "text": " exp "
+                          },
+                          {
+                            "type": "span",
+                            "text": "200"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "paddingStart": "8px"
+              }
+            ],
+            "borderWidth": "1px",
+            "borderColor": "#888888",
+            "cornerRadius": "5px",
+            "paddingAll": "5px",
+            "backgroundColor": "#ECEFF1",
+            "margin": "4px",
+            "paddingStart": "0px"
+          }
+        ],
+        "paddingAll": "8px",
+        "backgroundColor": "#CFD8DC",
+        "paddingTop": "4px"
+      }
+    }
+  ]
+}

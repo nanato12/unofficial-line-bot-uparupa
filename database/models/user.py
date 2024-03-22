@@ -73,19 +73,22 @@ class User(Base):
             u.authority = Authority.ADMIN
         return u
 
+    @classmethod
+    def get_ranked_users(cls) -> list[User]:
+        return (  # type: ignore [no-any-return]
+            cls.query.filter(User.authority != Authority.ADMIN)
+            .order_by(desc(User.level))
+            .order_by(desc(User.exp))
+            .order_by(desc(User.created_at))
+            .all()
+        )
+
     @property
     def ranking(self) -> int:
         if self.authority == Authority.ADMIN:
             return 0
 
-        return [
-            u.mid
-            for u in User.query.filter(User.authority != Authority.ADMIN)
-            .order_by(desc(User.level))
-            .order_by(desc(User.exp))
-            .order_by(desc(User.created_at))
-            .all()
-        ].index(self.mid) + 1
+        return [u.mid for u in self.get_ranked_users()].index(self.mid) + 1
 
     def can_give_exp(self, text: str, gid: str) -> bool:
         last_message = find_user_group_last_message(self.mid, gid)
