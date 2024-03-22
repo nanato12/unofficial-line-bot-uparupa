@@ -75,21 +75,16 @@ class User(Base):
 
     @property
     def ranking(self) -> int:
-        return (
-            list(
-                map(
-                    lambda u: u.mid,
-                    User.query.order_by(desc(User.level))
-                    .order_by(desc(User.exp))
-                    .order_by(desc(User.created_at))
-                    .all(),
-                )
-            ).index(self.mid)
-            + 1
-        )
+        return [
+            u.mid
+            for u in User.query.order_by(desc(User.level))
+            .order_by(desc(User.exp))
+            .order_by(desc(User.created_at))
+            .all()
+        ].index(self.mid) + 1
 
     def can_give_exp(self, text: str, gid: str) -> bool:
-        last_message = find_user_group_last_message(str(self.mid), gid)
+        last_message = find_user_group_last_message(self.mid, gid)
         if last_message is None:
             return True
 
@@ -98,7 +93,7 @@ class User(Base):
             return False
 
         # 最終メッセージとの文字の種類さが3種類以下15種類以上ならNG
-        cd = abs(len(set(str(last_message.text))) - len(set(text)))
+        cd = abs(len(set(last_message.text)) - len(set(text)))
         if cd <= 3 or cd >= 15:
             return False
 
@@ -116,7 +111,7 @@ class User(Base):
             exp = random_exp()
 
         self.exp += exp
-        while self.exp >= calc_need_exp((self.level)):
+        while self.exp >= calc_need_exp(self.level):
             self.exp -= calc_need_exp(self.level)
             self.level += 1
             result = True

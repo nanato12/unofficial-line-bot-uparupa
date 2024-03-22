@@ -33,6 +33,7 @@ if __name__ == "__main__":
 
     # 外部モジュールのロガー
     getLogger("httpx").setLevel(ERROR)
+    getLogger("sqlalchemy.engine").setLevel(INFO)
 
     line = LINEBot()
     line.tracer.run()
