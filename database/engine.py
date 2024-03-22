@@ -60,7 +60,13 @@ class BaseModel:
             session.commit()
 
     def save(self) -> None:
-        Session.commit()
+        with Session() as session:
+            session.commit()
+
+    def delete(self) -> None:
+        with Session() as session:
+            session.delete(self)
+            session.commit()
 
 
 Base: DeclarativeMeta = declarative_base(cls=BaseModel)
