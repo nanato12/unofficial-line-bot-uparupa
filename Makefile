@@ -15,7 +15,7 @@ lint:
 
 .PHONY: run
 run:
-	python main.py -c default
+	IS_LOCAL=true python main.py -c default
 
 .PHONY: gen_migration
 gen_migration:
