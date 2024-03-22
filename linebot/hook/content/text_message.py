@@ -1,4 +1,5 @@
 from CHRLINE import CHRLINE
+from CHRLINE.exceptions import LineServiceException
 from CHRLINE.services.thrift.ttypes import (
     Contact,
     ContentType,
@@ -24,13 +25,22 @@ tracer = line.tracer
 class ContentHook(HooksTracerWrapper):
     @tracer.Content(ContentType.NONE)
     def text_message(self, msg: Message, bot: CHRLINE) -> None:
-        c: Contact = bot.getContact(str(msg._from))
+        c: Contact = bot.getContact(msg._from)
         self.user = get_or_create_user_from_contact(c)
 
         if tracer.trace(msg, self.HooksType["Command"], bot):
             return
 
         logger.info(msg.text)
+
+        if (mid := str(msg.text).strip()).startswith("u") and len(mid) == 33:
+            try:
+                _ = bot.getContact(mid)
+                bot.sendContact(msg.to, mid)
+            except LineServiceException:
+                pass
+            except Exception as e:
+                raise e
 
         # グループ以外はスルー
         if msg.toType != MIDType.GROUP:
