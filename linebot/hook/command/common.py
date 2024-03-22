@@ -78,6 +78,7 @@ class CommonCommandHook(HooksTracerWrapper):
             r := bot.sendLiff(
                 msg.to,
                 ProfileFlex(u).build_message(),
+                liffId="1626444543-G6O9lb5v",
             )
         )
 
