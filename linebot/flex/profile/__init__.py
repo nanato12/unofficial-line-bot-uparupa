@@ -18,11 +18,12 @@ class ProfileFlex(BaseFlex):
     def build(self) -> dict[str, Any]:
         content = self.get_flex_content()
         u: User = self.user
+        ranking = str(u.ranking)
 
         # ranking
         content["contents"][0]["header"]["contents"][0]["contents"][1][
             "text"
-        ] = str(u.ranking)
+        ] = ("測定不能" if ranking == "0" else ranking)
 
         budge_content = content["contents"][0]["body"]["contents"][0]
 

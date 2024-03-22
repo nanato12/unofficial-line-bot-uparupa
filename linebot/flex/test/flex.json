@@ -1,0 +1,14 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "backgroundColor": "#FFFFFF00"
+      }
+    }
+  ]
+}

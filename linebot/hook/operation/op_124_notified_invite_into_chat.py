@@ -25,6 +25,7 @@ class Op124Hook(HooksTracer):
         if bot.mid in str(op.param3).split():
             bot.acceptChatInvitation(gid)
             contact: Contact = bot.getContact(inviter_mid)
+            bot.tryRegisterE2EEGroupKey(gid)
             sleep(5)
             bot.sendMention(gid, "@! 招待ありがとう♪", mids=[contact.mid])
 

@@ -1,7 +1,5 @@
 #! /bin/bash
 
-git pull
-
 # activate python venv
 . venv/bin/activate
 
