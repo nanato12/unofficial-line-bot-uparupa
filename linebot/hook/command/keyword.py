@@ -9,6 +9,7 @@ from repository.keyword_repository import (
     check_registration_keyword,
     find_keyword_from_user_and_text,
 )
+from repository.user_repository import get_or_create_user_from_mid
 
 logger = get_file_path_logger(__name__)
 
@@ -40,7 +41,9 @@ class KeywordCommandHook(HooksTracerWrapper):
             )
             return
 
-        if check_registration_keyword(self.user, receive_text):
+        u = get_or_create_user_from_mid(msg._from, bot)
+
+        if check_registration_keyword(u, receive_text):
             bot.replyMessage(
                 msg, "あなたはすでにそのキーワードを登録しています！"
             )
@@ -49,7 +52,7 @@ class KeywordCommandHook(HooksTracerWrapper):
         k = Keyword()
         k.receive_text = receive_text
         k.reply_text = reply_text
-        k.registrant = self.user
+        k.registrant = u
         k.create()
 
         bot.replyMessage(
@@ -69,8 +72,10 @@ class KeywordCommandHook(HooksTracerWrapper):
             )
             return
 
+        u = get_or_create_user_from_mid(msg._from, bot)
+
         word = text[text.index(" ") :].strip()
-        if not (k := find_keyword_from_user_and_text(self.user, word)):
+        if not (k := find_keyword_from_user_and_text(u, word)):
             bot.replyMessage(
                 msg,
                 f"あなたは「{word}」に対するキーワードを登録していません！",
