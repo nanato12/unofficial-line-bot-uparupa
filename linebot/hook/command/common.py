@@ -1,3 +1,4 @@
+from datetime import datetime
 from json import loads as json_loads
 
 from CHRLINE import CHRLINE
@@ -49,6 +50,21 @@ class CommonCommandHook(HooksTracerWrapper):
         """
 
         bot.replyMessage(msg, self.genHelp())
+
+    @tracer.Command()
+    def test(self, msg: Message, bot: CHRLINE) -> None:
+        """
+        起動確認を行います。
+        """
+
+        bot.replyMessage(
+            msg,
+            (
+                "動いてるよ〜\n\n"
+                f"経過時間: {str(datetime.now()-self.setup_timestamp)[:-7]}\n"
+                f"起動日時: {self.setup_timestamp:%Y-%m-%d %H:%M:%S}"
+            ),
+        )
 
     @tracer.Command(prefixes=False, alt=["プロフィール", "プロフ"])
     def profile(self, msg: Message, bot: CHRLINE) -> None:
