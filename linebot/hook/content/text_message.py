@@ -1,11 +1,6 @@
 from CHRLINE import CHRLINE
 from CHRLINE.exceptions import LineServiceException
-from CHRLINE.services.thrift.ttypes import (
-    Contact,
-    ContentType,
-    Message,
-    MIDType,
-)
+from CHRLINE.services.thrift.ttypes import ContentType, Message, MIDType
 
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
@@ -14,7 +9,7 @@ from repository.keyword_repository import (
     choice_keyword,
     find_keywords_from_receive_text,
 )
-from repository.user_repository import get_or_create_user_from_contact
+from repository.user_repository import get_or_create_user_from_mid
 
 logger = get_file_path_logger(__name__)
 
@@ -25,9 +20,6 @@ tracer = line.tracer
 class ContentHook(HooksTracerWrapper):
     @tracer.Content(ContentType.NONE)
     def text_message(self, msg: Message, bot: CHRLINE) -> None:
-        c: Contact = bot.getContact(msg._from)
-        self.user = get_or_create_user_from_contact(c)
-
         if tracer.trace(msg, self.HooksType["Command"], bot):
             return
 
@@ -55,9 +47,10 @@ class ContentHook(HooksTracerWrapper):
                 if k.reply_voice_path:
                     bot.sendAudio(msg.to, k.reply_voice_path)
 
-        if self.user.can_give_exp(str(msg.text), str(msg.to)):
-            if self.user.give_exp():
-                if self.user.level % 5 == 0 or self.user.level > 100:
+        u = get_or_create_user_from_mid(msg._from, bot)
+        if u.can_give_exp(str(msg.text), str(msg.to)):
+            if u.give_exp():
+                if u.level % 5 == 0 or u.level > 100:
                     bot.replyMessage(
-                        msg, f"レベルが「{self.user.level}」に上がったよ！"
+                        msg, f"レベルが「{u.level}」に上がったよ！"
                     )
