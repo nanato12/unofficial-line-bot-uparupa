@@ -77,7 +77,7 @@ class KeywordCommandHook(HooksTracerWrapper):
             )
             return
 
-        k.query.delete()
+        k.delete()
 
         bot.replyMessage(
             msg,
