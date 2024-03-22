@@ -45,7 +45,7 @@ class ContentHook(HooksTracerWrapper):
                 if k.reply_voice_path:
                     bot.sendAudio(msg.to, k.reply_voice_path)
 
-        if not self.user.can_give_exp(str(msg.text), str(msg.to)):
+        if self.user.can_give_exp(str(msg.text), str(msg.to)):
             if self.user.give_exp():
                 if self.user.level % 5 == 0 or self.user.level > 100:
                     bot.replyMessage(
