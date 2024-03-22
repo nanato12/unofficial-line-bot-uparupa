@@ -1,14 +1,15 @@
+from datetime import datetime
 from json import loads as json_loads
 
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message, MIDType
 
-from database.models.user import User
 from linebot.flex.profile import ProfileFlex
 from linebot.helpers.calculation import calc_need_exp
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from repository.user_repository import get_or_create_user_from_mid
 
 logger = get_file_path_logger(__name__)
 
@@ -50,21 +51,37 @@ class CommonCommandHook(HooksTracerWrapper):
 
         bot.replyMessage(msg, self.genHelp())
 
+    @tracer.Command()
+    def test(self, msg: Message, bot: CHRLINE) -> None:
+        """
+        起動確認を行います。
+        """
+
+        bot.replyMessage(
+            msg,
+            (
+                "動いてるよ〜\n\n"
+                f"経過時間: {str(datetime.now()-self.setup_timestamp)[:-7]}\n"
+                f"起動日時: {self.setup_timestamp:%Y-%m-%d %H:%M:%S}"
+            ),
+        )
+
     @tracer.Command(prefixes=False, alt=["プロフィール", "プロフ"])
     def profile(self, msg: Message, bot: CHRLINE) -> None:
         """
         プロフィールを送信します。
         """
 
+        u = get_or_create_user_from_mid(msg._from, bot)
+
         logger.info(
             r := bot.sendLiff(
                 msg.to,
-                ProfileFlex(self.user).build_message(),
+                ProfileFlex(u).build_message(),
             )
         )
 
         if json_loads(r).get("status") != "ok":
-            u: User = self.user
             bot.replyMessage(
                 msg,
                 (

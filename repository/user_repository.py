@@ -1,6 +1,6 @@
 from typing import Optional
 
-from CHRLINE.services.thrift.ttypes import Contact
+from CHRLINE import CHRLINE
 
 from database.models.user import User
 from linebot.exceptions.sql_error import NotFoundRecordError
@@ -17,9 +17,9 @@ def get_user_from_mid(mid: str) -> User:
     return u
 
 
-def get_or_create_user_from_contact(c: Contact) -> User:
-    u = find_user_from_mid(str(c.mid))
+def get_or_create_user_from_mid(mid: str, bot: CHRLINE) -> User:
+    u = find_user_from_mid(mid)
     if not u:
-        u = User.from_line_contact(c)
+        u = User.from_line_contact(bot.getContact(mid))
         u.create()
     return u

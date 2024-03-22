@@ -1,7 +1,7 @@
-from CHRLINE.hooks import HooksTracer
+from datetime import datetime
 
-from database.models.user import User
+from CHRLINE.hooks import HooksTracer
 
 
 class HooksTracerWrapper(HooksTracer):
-    user: User
+    setup_timestamp: datetime = datetime.now()
