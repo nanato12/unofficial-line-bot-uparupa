@@ -18,7 +18,7 @@ jobs:
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
 
       - name: run deploy script
-        run: ssh $SSH_USER@$SSH_HOST -p 22 "cd /root/github.com/unofficial-line-bot-uparupa && sh deploy.sh"
+        run: ssh $SSH_USER@$SSH_HOST -p 22 "cd /root/github.com/unofficial-line-bot-uparupa && git pull && sh deploy.sh"
         env:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
