@@ -22,7 +22,7 @@ class RankingCommandHook(HooksTracerWrapper):
         ランキングを送信します。
         """
 
-        users = User.get_ranked_users()
+        users = User.get_ranked_users()[:40]
 
         logger.info(
             r := bot.sendLiff(
