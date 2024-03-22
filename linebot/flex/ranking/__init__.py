@@ -22,9 +22,7 @@ class RankingFlex(BaseFlex):
         content: dict[str, Union[list, Any]] = self.get_flex_content()
 
         # ranking
-        content["contents"][0]["header"]["contents"][0]["contents"][1][
-            "text"
-        ] = self.title
+        content["contents"][0]["header"]["contents"][0]["text"] = self.title
 
         base_bubble: dict[str, Union[Any, dict[str, list]]] = content[
             "contents"
