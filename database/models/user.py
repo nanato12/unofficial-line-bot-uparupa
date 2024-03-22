@@ -75,7 +75,7 @@ class User(Base):
 
     @classmethod
     def get_ranked_users(cls) -> list[User]:
-        return (
+        return (  # type: ignore [no-any-return]
             cls.query.filter(User.authority != Authority.ADMIN)
             .order_by(desc(User.level))
             .order_by(desc(User.exp))
