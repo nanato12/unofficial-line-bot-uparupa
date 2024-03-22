@@ -3,3 +3,4 @@ SQLAlchemy==2.0.28
 inflection==0.5.1
 mysqlclient==2.2.4
 alembic==1.13.1
+more-itertools==10.2.0
