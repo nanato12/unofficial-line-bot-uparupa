@@ -4,12 +4,12 @@ from json import loads as json_loads
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message, MIDType
 
-from database.models.user import User
 from linebot.flex.profile import ProfileFlex
 from linebot.helpers.calculation import calc_need_exp
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from repository.user_repository import get_or_create_user_from_mid
 
 logger = get_file_path_logger(__name__)
 
@@ -72,15 +72,16 @@ class CommonCommandHook(HooksTracerWrapper):
         プロフィールを送信します。
         """
 
+        u = get_or_create_user_from_mid(msg._from, bot)
+
         logger.info(
             r := bot.sendLiff(
                 msg.to,
-                ProfileFlex(self.user).build_message(),
+                ProfileFlex(u).build_message(),
             )
         )
 
         if json_loads(r).get("status") != "ok":
-            u: User = self.user
             bot.replyMessage(
                 msg,
                 (
