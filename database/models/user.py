@@ -75,9 +75,13 @@ class User(Base):
 
     @property
     def ranking(self) -> int:
+        if self.authority == Authority.ADMIN:
+            return 0
+
         return [
             u.mid
-            for u in User.query.order_by(desc(User.level))
+            for u in User.query.filter(User.authority != Authority.ADMIN)
+            .order_by(desc(User.level))
             .order_by(desc(User.exp))
             .order_by(desc(User.created_at))
             .all()
