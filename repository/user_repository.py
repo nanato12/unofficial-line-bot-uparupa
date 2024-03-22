@@ -1,9 +1,7 @@
 from typing import Optional
 
 from CHRLINE import CHRLINE
-from sqlalchemy import desc
 
-from constants.enums.authority import Authority
 from database.models.user import User
 from linebot.exceptions.sql_error import NotFoundRecordError
 
@@ -25,13 +23,3 @@ def get_or_create_user_from_mid(mid: str, bot: CHRLINE) -> User:
         u = User.from_line_contact(bot.getContact(mid))
         u.create()
     return u
-
-
-def get_ranked_users() -> list[User]:
-    return (
-        User.query.filter(User.authority != Authority.ADMIN)
-        .order_by(desc(User.level))
-        .order_by(desc(User.exp))
-        .order_by(desc(User.created_at))
-        .all()
-    )
