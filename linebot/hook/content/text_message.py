@@ -1,7 +1,9 @@
 from CHRLINE import CHRLINE
 from CHRLINE.exceptions import LineServiceException
 from CHRLINE.services.thrift.ttypes import ContentType, Message, MIDType
+from sqlalchemy import desc
 
+from database.models.message import Message as MessageModel
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
@@ -20,10 +22,25 @@ tracer = line.tracer
 class ContentHook(HooksTracerWrapper):
     @tracer.Content(ContentType.NONE)
     def text_message(self, msg: Message, bot: CHRLINE) -> None:
-        if tracer.trace(msg, self.HooksType["Command"], bot):
+        logger.info(msg.text)
+
+        # 直近の同じ送信者の同じテキストを探す
+        recent_message = (
+            MessageModel.query.filter(MessageModel._from == msg._from)
+            .order_by(desc(MessageModel.create_time))
+            .first()
+        )
+
+        # 直近のメッセージから3秒以内だったら処理しない
+        if (
+            recent_message
+            and (msg.createdTime - recent_message.create_time) < 3000
+        ):
+            logger.info("連投対策")
             return
 
-        logger.info(msg.text)
+        if tracer.trace(msg, self.HooksType["Command"], bot):
+            return
 
         if (mid := str(msg.text).strip()).startswith("u") and len(mid) == 33:
             try:
