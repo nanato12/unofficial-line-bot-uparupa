@@ -92,7 +92,7 @@ class User(Base):
 
     def can_give_exp(self, text: str, gid: str) -> bool:
         last_message = find_user_group_last_message(self.mid, gid)
-        if last_message is None:
+        if last_message is None or last_message.text is None:
             return True
 
         # 3種類以下ならNG

@@ -1,5 +1,6 @@
 from datetime import datetime
 from json import loads as json_loads
+from typing import Optional
 
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Message, MIDType
@@ -68,6 +69,19 @@ class CommonCommandHook(HooksTracerWrapper):
                 f"起動日時: {self.setup_timestamp:%Y-%m-%d %H:%M:%S}"
             ),
         )
+
+    @tracer.Command()
+    def unsend(self, msg: Message, bot: CHRLINE) -> None:
+        """
+        リプライ先のメッセージを取り消します。
+        """
+
+        unsend_msg_id: Optional[str] = msg.relatedMessageId
+        if unsend_msg_id:
+            bot.unsendMessage(unsend_msg_id)
+            bot.replyMessage(msg, "メッセージを取り消したよ！")
+        else:
+            bot.replyMessage(msg, "取り消したいメッセージをリプライしてね！")
 
     @tracer.Command(prefixes=False, alt=["プロフィール", "プロフ", "/me"])
     def profile(self, msg: Message, bot: CHRLINE) -> None:

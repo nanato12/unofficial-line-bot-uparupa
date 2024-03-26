@@ -7,4 +7,4 @@ def calc_need_exp(level: int) -> int:
 
 
 def random_exp() -> int:
-    return randint(15, 35)
+    return randint(30, 100)
