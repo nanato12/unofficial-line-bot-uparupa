@@ -60,4 +60,3 @@ class Op30Hook(HooksTracer):
 
         o = OperationModel.from_line_operation(op)
         o.create()
-
