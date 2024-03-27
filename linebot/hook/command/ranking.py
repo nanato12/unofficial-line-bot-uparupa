@@ -33,4 +33,13 @@ class RankingCommandHook(HooksTracerWrapper):
         )
 
         if json_loads(r).get("status") != "ok":
-            bot.replyMessage(msg, "ランキング")
+            bot.replyMessage(
+                msg,
+                "ランキング\n\n"
+                + "\n".join(
+                    [
+                        f"{i}位 Lv {user.level} {user.name}"
+                        for i, user in enumerate(users[:5], start=1)
+                    ]
+                ),
+            )
