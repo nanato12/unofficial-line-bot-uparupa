@@ -2,6 +2,7 @@ from os import environ
 
 from linebot.hook.command import (  # noqa: F401
     common,
+    emoji,
     keyword,
     ranking,
     user_profile,
