@@ -81,12 +81,17 @@ class TextMessageHook(HooksTracerWrapper):
         u = get_or_create_user_from_mid(msg._from, bot)
         if u.can_give_exp(str(msg.text), str(msg.to)):
             if u.give_exp():
-                bot.replyMessage(msg, f"レベルが「{u.level}」に上がったよ！")
+                bot.replyMessage(
+                    msg,
+                    f"レベルが「{u.level}」に上がったよ！\n"
+                    "「プロフ」で自分のレベルが見られるよ！",
+                )
 
         # 直近のメッセージから1時間経過していればユーザー情報を更新する
         if (
             recent_message
-            and (msg.createdTime - recent_message.create_time) >= 60 * 60 * 1000
+            and (msg.createdTime - recent_message.create_time)
+            >= 60 * 60 * 1000
         ):
             c: Contact = bot.getContact(msg._from)
             user = get_or_create_user_from_contact(c)
