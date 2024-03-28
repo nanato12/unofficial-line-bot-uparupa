@@ -38,7 +38,10 @@ class KeywordCommandHook(HooksTracerWrapper):
                 "キーワード登録 テキスト:返信\n\n"
                 "使用できる記号\n"
                 "@! 送信者をメンション\n"
-                "[name] 送信者の名前",
+                "[name] 送信者の名前\n\n"
+                "使用できるコマンド (記号との併用不可)\n"
+                "/slot スロット文字に変換\n"
+                "/mj 麻雀文字に変換",
             )
             return
 
