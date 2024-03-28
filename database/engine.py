@@ -7,6 +7,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import declared_attr, scoped_session, sessionmaker
 from sqlalchemy.orm.decl_api import DeclarativeMeta
+from sqlalchemy.pool import StaticPool
 from sqlalchemy.schema import Column
 from sqlalchemy.types import DateTime, Integer
 
@@ -21,7 +22,8 @@ engine = create_engine(
         port=c["db_port"],
         database=c["db_database"],
         charset=c["db_charset"],
-    )
+    ),
+    poolclass=StaticPool,
 )
 
 Session = scoped_session(
