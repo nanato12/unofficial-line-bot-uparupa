@@ -72,6 +72,5 @@ class CommonCommandHook(HooksTracerWrapper):
         unsend_msg_id: Optional[str] = msg.relatedMessageId
         if unsend_msg_id:
             bot.unsendMessage(unsend_msg_id)
-            bot.replyMessage(msg, "メッセージを取り消したよ！")
         else:
             bot.replyMessage(msg, "取り消したいメッセージをリプライしてね！")
