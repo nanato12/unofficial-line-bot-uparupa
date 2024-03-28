@@ -26,6 +26,10 @@ class KeywordCommandHook(HooksTracerWrapper):
         使用できる記号
         @! 送信者をメンション
         [name] 送信者の名前
+
+        使用できるコマンド (記号との併用不可)
+        /slot スロット文字に変換
+        /mj 麻雀文字に変換
         """
         text: str = msg.text
         if " " not in text or ":" not in text:
