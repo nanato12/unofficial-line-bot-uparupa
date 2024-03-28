@@ -41,16 +41,16 @@ class Emoji(ABC):
 
     @classmethod
     def convert_message(cls, texts: List[str]) -> Tuple[str, List[Emoji]]:
-        result = ""
+        text = ""
         emojis: List[Emoji] = []
 
         for c in texts:
             try:
                 emoji = cls.from_char(c)
-                emoji.start = len(result)
-                result += f"({c})"
-                emoji.end = len(result)
+                emoji.start = len(text)
+                text += f"({c})"
+                emoji.end = len(text)
                 emojis.append(emoji)
             except ValueError:
-                result += c
-        return result, emojis
+                text += c
+        return text, emojis
