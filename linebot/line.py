@@ -13,7 +13,9 @@ class LINEBot(metaclass=SingletonMeta):
     def __init__(self) -> None:
         parser: ConfigParser = ConfigParser()
 
-        self.bot = CHRLINEWrapper(parser.token, device=parser.device, useThrift=True)
+        self.bot = CHRLINEWrapper(
+            parser.token, device=parser.device, useThrift=True
+        )
         self.auth_token = self.bot.authToken
 
         for mid in Config.ADMINS:

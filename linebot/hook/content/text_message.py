@@ -74,14 +74,16 @@ class TextMessageHook(HooksTracerWrapper):
         if keywords := find_keywords_from_receive_text(text):
             if k := choice_keyword(keywords):
                 if k.reply_text:
-                    text: str = k.reply_text
-                    if "[name]" in text:
+                    reply_text: str = k.reply_text
+                    if "[name]" in reply_text:
                         c: Contact = bot.getContact(msg._from)
-                        text = text.replace("[name]", c.displayName)
-                    if "@!" in text:
-                        bot.sendMention(msg.to, text, mids=[msg._from])
+                        reply_text = reply_text.replace(
+                            "[name]", c.displayName
+                        )
+                    if "@!" in reply_text:
+                        bot.sendMention(msg.to, reply_text, mids=[msg._from])
                     else:
-                        bot.replyMessage(msg, text)
+                        bot.replyMessage(msg, reply_text)
                 if k.reply_image_path:
                     bot.sendImage(msg.to, k.reply_image_path)
                 if k.reply_voice_path:
@@ -102,7 +104,7 @@ class TextMessageHook(HooksTracerWrapper):
             and (msg.createdTime - recent_message.create_time)
             >= 60 * 60 * 1000
         ):
-            c: Contact = bot.getContact(msg._from)
+            c = bot.getContact(msg._from)
             user = get_or_create_user_from_contact(c)
             user.picture_status = c.pictureStatus
             user.save()

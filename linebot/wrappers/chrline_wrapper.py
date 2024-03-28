@@ -54,7 +54,7 @@ class CHRLINEWrapper(CHRLINE):
         )
 
         if json_loads(r).get("status") != "ok":
-            self.replyMessage(
+            return self.replyMessage(
                 msg,
                 (
                     f"Ranking: {u.ranking}\n"
@@ -63,3 +63,4 @@ class CHRLINEWrapper(CHRLINE):
                     f"経験値: {u.exp:,} / {calc_need_exp(u.level):,}"
                 ),
             )
+        return r
