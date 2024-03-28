@@ -11,6 +11,8 @@ from database.models.message import Message as MessageModel
 from linebot.helpers.message import get_mids_from_message
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
+from linebot.models.emojis.mahjang import MahjangMUPEmoji
+from linebot.models.emojis.slot_emoji import SlotEmoji
 from linebot.wrappers.chrline_wrapper import CHRLINEWrapper
 from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.keyword_repository import (
@@ -82,6 +84,20 @@ class TextMessageHook(HooksTracerWrapper):
                         )
                     if "@!" in reply_text:
                         bot.sendMention(msg.to, reply_text, mids=[msg._from])
+                    elif reply_text.startswith("/slot "):
+                        bot.reply_emojis_message(
+                            msg,
+                            *SlotEmoji.convert_message(
+                                list(reply_text.replace("/slot ", ""))
+                            ),
+                        )
+                    elif reply_text.startswith("/mj "):
+                        bot.reply_emojis_message(
+                            msg,
+                            *MahjangMUPEmoji.convert_message(
+                                reply_text.replace("/mj ", "").split(" ")
+                            ),
+                        )
                     else:
                         bot.replyMessage(msg, reply_text)
                 if k.reply_image_path:
