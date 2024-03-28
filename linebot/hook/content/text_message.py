@@ -1,4 +1,3 @@
-from CHRLINE import CHRLINE
 from CHRLINE.exceptions import LineServiceException
 from CHRLINE.services.thrift.ttypes import (
     Contact,
@@ -9,8 +8,10 @@ from CHRLINE.services.thrift.ttypes import (
 from sqlalchemy import desc
 
 from database.models.message import Message as MessageModel
+from linebot.helpers.message import get_mids_from_message
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
+from linebot.wrappers.chrline_wrapper import CHRLINEWrapper
 from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.keyword_repository import (
     choice_keyword,
@@ -29,8 +30,10 @@ tracer = line.tracer
 
 class TextMessageHook(HooksTracerWrapper):
     @tracer.Content(ContentType.NONE)
-    def text_message(self, msg: Message, bot: CHRLINE) -> None:
-        logger.info(msg.text)
+    def text_message(self, msg: Message, bot: CHRLINEWrapper) -> None:
+        text: str = msg.text
+
+        logger.info(text)
 
         # 直近の同じ送信者のメッセージを探す
         recent_message = (
@@ -50,7 +53,7 @@ class TextMessageHook(HooksTracerWrapper):
         if tracer.trace(msg, self.HooksType["Command"], bot):
             return
 
-        if (mid := str(msg.text).strip()).startswith("u") and len(mid) == 33:
+        if (mid := text.strip()).startswith("u") and len(mid) == 33:
             try:
                 _ = bot.getContact(mid)
                 bot.sendContact(msg.to, mid)
@@ -62,7 +65,13 @@ class TextMessageHook(HooksTracerWrapper):
         if msg.toType != MIDType.GROUP:
             return
 
-        if keywords := find_keywords_from_receive_text(msg.text):
+        if mentionee_mids := get_mids_from_message(msg):
+            if text.endswith("プロフ"):
+                u = get_or_create_user_from_mid(mentionee_mids[0], bot)
+                bot.reply_user_profile(msg, u)
+                return
+
+        if keywords := find_keywords_from_receive_text(text):
             if k := choice_keyword(keywords):
                 if k.reply_text:
                     text: str = k.reply_text
@@ -79,7 +88,7 @@ class TextMessageHook(HooksTracerWrapper):
                     bot.sendAudio(msg.to, k.reply_voice_path)
 
         u = get_or_create_user_from_mid(msg._from, bot)
-        if u.can_give_exp(str(msg.text), str(msg.to)):
+        if u.can_give_exp(text, msg.to):
             if u.give_exp():
                 bot.replyMessage(
                     msg,
