@@ -1,6 +1,6 @@
 from logging import ERROR, INFO, StreamHandler, basicConfig, getLogger
 from logging.handlers import TimedRotatingFileHandler
-from os import makedirs
+from os import environ, makedirs
 
 from linebot import hook  # noqa: F401
 from linebot.line import LINEBot
@@ -33,7 +33,9 @@ if __name__ == "__main__":
 
     # 外部モジュールのロガー
     getLogger("httpx").setLevel(ERROR)
-    getLogger("sqlalchemy.engine").setLevel(INFO)
+
+    if environ.get("IS_LOCAL"):
+        getLogger("sqlalchemy.engine").setLevel(INFO)
 
     line = LINEBot()
     line.tracer.run()
