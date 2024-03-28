@@ -27,7 +27,7 @@ line = LINEBot()
 tracer = line.tracer
 
 
-class ContentHook(HooksTracerWrapper):
+class TextMessageHook(HooksTracerWrapper):
     @tracer.Content(ContentType.NONE)
     def text_message(self, msg: Message, bot: CHRLINE) -> None:
         logger.info(msg.text)
@@ -59,14 +59,20 @@ class ContentHook(HooksTracerWrapper):
             except Exception as e:
                 raise e
 
-        # グループ以外はスルー
         if msg.toType != MIDType.GROUP:
             return
 
         if keywords := find_keywords_from_receive_text(msg.text):
             if k := choice_keyword(keywords):
                 if k.reply_text:
-                    bot.replyMessage(msg, k.reply_text)
+                    text: str = k.reply_text
+                    if "[name]" in text:
+                        c: Contact = bot.getContact(msg._from)
+                        text = text.replace("[name]", c.displayName)
+                    if "@!" in text:
+                        bot.sendMention(msg.to, text, mids=[msg._from])
+                    else:
+                        bot.replyMessage(msg, text)
                 if k.reply_image_path:
                     bot.sendImage(msg.to, k.reply_image_path)
                 if k.reply_voice_path:
@@ -80,7 +86,7 @@ class ContentHook(HooksTracerWrapper):
         # 直近のメッセージから1時間経過していればユーザー情報を更新する
         if (
             recent_message
-            and (msg.createdTime - recent_message.create_time) < 60 * 60 * 1000
+            and (msg.createdTime - recent_message.create_time) >= 60 * 60 * 1000
         ):
             c: Contact = bot.getContact(msg._from)
             user = get_or_create_user_from_contact(c)
