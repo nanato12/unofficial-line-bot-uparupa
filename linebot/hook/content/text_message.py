@@ -1,6 +1,11 @@
 from CHRLINE import CHRLINE
 from CHRLINE.exceptions import LineServiceException
-from CHRLINE.services.thrift.ttypes import ContentType, Message, MIDType
+from CHRLINE.services.thrift.ttypes import (
+    Contact,
+    ContentType,
+    Message,
+    MIDType,
+)
 from sqlalchemy import desc
 
 from database.models.message import Message as MessageModel
@@ -11,7 +16,10 @@ from repository.keyword_repository import (
     choice_keyword,
     find_keywords_from_receive_text,
 )
-from repository.user_repository import get_or_create_user_from_mid
+from repository.user_repository import (
+    get_or_create_user_from_contact,
+    get_or_create_user_from_mid,
+)
 
 logger = get_file_path_logger(__name__)
 
@@ -24,7 +32,7 @@ class ContentHook(HooksTracerWrapper):
     def text_message(self, msg: Message, bot: CHRLINE) -> None:
         logger.info(msg.text)
 
-        # 直近の同じ送信者の同じテキストを探す
+        # 直近の同じ送信者のメッセージを探す
         recent_message = (
             MessageModel.query.filter(MessageModel._from == msg._from)
             .order_by(desc(MessageModel.create_time))
@@ -68,3 +76,15 @@ class ContentHook(HooksTracerWrapper):
         if u.can_give_exp(str(msg.text), str(msg.to)):
             if u.give_exp():
                 bot.replyMessage(msg, f"レベルが「{u.level}」に上がったよ！")
+
+        # 直近のメッセージから1時間経過していればユーザー情報を更新する
+        if (
+            recent_message
+            and (msg.createdTime - recent_message.create_time) < 60 * 60 * 1000
+        ):
+            c: Contact = bot.getContact(msg._from)
+            user = get_or_create_user_from_contact(c)
+            user.picture_status = c.pictureStatus
+            user.save()
+
+            logger.info(f"プロフィール更新: {msg._from}")
