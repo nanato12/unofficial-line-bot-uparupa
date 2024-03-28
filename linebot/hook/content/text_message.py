@@ -11,7 +11,7 @@ from sqlalchemy import desc
 from database.models.message import Message as MessageModel
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.keyword_repository import (
     choice_keyword,
     find_keywords_from_receive_text,

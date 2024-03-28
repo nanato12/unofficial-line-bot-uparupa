@@ -4,7 +4,7 @@ from CHRLINE.services.thrift.ttypes import Message
 from database.models.keyword import Keyword
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.keyword_repository import (
     check_registration_keyword,
     find_keyword_from_user_and_text,

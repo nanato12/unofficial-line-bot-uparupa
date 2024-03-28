@@ -9,7 +9,7 @@ from linebot.flex.profile import ProfileFlex
 from linebot.helpers.calculation import calc_need_exp
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.user_repository import (
     find_user_from_name,
     get_or_create_user_from_mid,

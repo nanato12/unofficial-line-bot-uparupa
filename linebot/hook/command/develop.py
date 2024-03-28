@@ -4,7 +4,7 @@ from CHRLINE.services.thrift.ttypes import Message
 from linebot.flex.test import TestFlex
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 
 logger = get_file_path_logger(__name__)
 

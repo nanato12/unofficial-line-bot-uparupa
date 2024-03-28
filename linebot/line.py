@@ -3,7 +3,7 @@ from CHRLINE import CHRLINE
 from design.singleton import SingletonMeta
 from linebot.config import Config
 from linebot.parser import ConfigParser
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 
 
 class LINEBot(metaclass=SingletonMeta):
