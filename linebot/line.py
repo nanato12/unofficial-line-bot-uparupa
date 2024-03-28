@@ -1,20 +1,21 @@
-from CHRLINE import CHRLINE
-
 from design.singleton import SingletonMeta
 from linebot.config import Config
 from linebot.parser import ConfigParser
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.chrline_wrapper import CHRLINEWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 
 
 class LINEBot(metaclass=SingletonMeta):
     auth_token: str
-    bot: CHRLINE
+    bot: CHRLINEWrapper
     tracer: HooksTracerWrapper
 
     def __init__(self) -> None:
         parser: ConfigParser = ConfigParser()
 
-        self.bot = CHRLINE(parser.token, device=parser.device, useThrift=True)
+        self.bot = CHRLINEWrapper(
+            parser.token, device=parser.device, useThrift=True
+        )
         self.auth_token = self.bot.authToken
 
         for mid in Config.ADMINS:

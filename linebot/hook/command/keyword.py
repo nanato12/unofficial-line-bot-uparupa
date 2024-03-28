@@ -4,7 +4,7 @@ from CHRLINE.services.thrift.ttypes import Message
 from database.models.keyword import Keyword
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
-from linebot.wrappers.user_hook_tracer import HooksTracerWrapper
+from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
 from repository.keyword_repository import (
     check_registration_keyword,
     find_keyword_from_user_and_text,
@@ -22,11 +22,19 @@ class KeywordCommandHook(HooksTracerWrapper):
     def add_keyword(self, msg: Message, bot: CHRLINE) -> None:
         """キーワード登録ができます。
         キーワード登録 テキスト:返信
+
+        使用できる記号
+        @! 送信者をメンション
+        [name] 送信者の名前
         """
         text: str = msg.text
         if " " not in text or ":" not in text:
             bot.replyMessage(
-                msg, "不正なコマンドです！\n\nキーワード登録 テキスト:返信"
+                msg,
+                "キーワード登録 テキスト:返信\n\n"
+                "使用できる記号\n"
+                "@! 送信者をメンション\n"
+                "[name] 送信者の名前",
             )
             return
 
