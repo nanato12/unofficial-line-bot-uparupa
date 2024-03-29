@@ -1,8 +1,24 @@
 # unofficial LINE Bot うぱるぱ
 
+This bot operates on a **personal account**, not an official LINE account.
+
 Used [CHRLINE](https://github.com/DeachSword/CHRLINE).
 
 You can add this account [here](https://line.me/R/nv/profilePopup/mid=uaf64c300fb85813724ab77a2748502f6).
+
+## Technology
+
+- Python 3.10 - 3.12
+- MySQL 5.7
+- SQLAlchemy (ORM tool)
+- alembic (migration tool)
+
+## Linter & formatter
+
+- black
+- isort
+- flake8
+- mypy
 
 ## Usage with command line arguments
 
@@ -74,9 +90,6 @@ $ . venv/bin/activate
 (venv) $ make run
 ```
 
-## Linter & formatter
+## Operation Example
 
-- black
-- isort
-- flake8
-- mypy
+![profile command](docs/images/profile.png)
