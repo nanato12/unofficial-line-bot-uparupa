@@ -1,3 +1,4 @@
+from constants.enums.authority import Authority
 from design.singleton import SingletonMeta
 from linebot.config import Config
 from linebot.parser import ConfigParser
@@ -14,7 +15,10 @@ class LINEBot(metaclass=SingletonMeta):
         parser: ConfigParser = ConfigParser()
 
         self.bot = CHRLINEWrapper(
-            parser.token, device=parser.device, useThrift=True, savePath="./"
+            parser.token,
+            device=parser.device,
+            useThrift=True,
+            savePath="./",
         )
         self.auth_token = self.bot.authToken
 
@@ -22,3 +26,6 @@ class LINEBot(metaclass=SingletonMeta):
             self.bot.sendMessage(mid, "起動したよ♪")
 
         self.tracer = HooksTracerWrapper(self.bot, prefixes=["/"])
+
+        for mid in Config.ADMINS:
+            self.tracer.addPermission(mid, Authority.ADMIN)
