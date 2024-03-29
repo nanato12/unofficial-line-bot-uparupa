@@ -143,3 +143,4 @@ run.pid
 /.data
 /.e2eeKeys
 /.images
+/.database
