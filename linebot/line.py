@@ -14,7 +14,7 @@ class LINEBot(metaclass=SingletonMeta):
         parser: ConfigParser = ConfigParser()
 
         self.bot = CHRLINEWrapper(
-            parser.token, device=parser.device, useThrift=True
+            parser.token, device=parser.device, useThrift=True, savePath="./"
         )
         self.auth_token = self.bot.authToken
 
