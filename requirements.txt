@@ -1,6 +1,8 @@
-git+https://github.com/line-bot-oss/CHRLINE.git@v1.0.3
+git+https://github.com/line-bot-oss/CHRLINE.git@v1.0.5
 SQLAlchemy==2.0.28
 inflection==0.5.1
 mysqlclient==2.2.4
 alembic==1.13.1
 more-itertools==10.2.0
+g4f==0.2.7.1
+curl_cffi==0.6.2
