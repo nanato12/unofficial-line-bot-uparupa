@@ -1,6 +1,12 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+
 from CHRLINE import CHRLINE
 from CHRLINE.services.thrift.ttypes import Contact, Message
 
+from database.models.operation import Operation
 from linebot.line import LINEBot
 from linebot.logger import get_file_path_logger
 from linebot.wrappers.hook_tracer_wrapper import HooksTracerWrapper
@@ -10,6 +16,20 @@ logger = get_file_path_logger(__name__)
 
 line = LINEBot()
 tracer = line.tracer
+
+
+@dataclass
+class MessageReader:
+    created_at: datetime
+    name: str
+
+    @classmethod
+    def from_ops(
+        cls, ops: list[Operation], bot: CHRLINE
+    ) -> list[MessageReader]:
+        contacts: list[Contact] = bot.getContacts([op.param2 for op in ops])
+        contact_map: dict[str, str] = {c.mid: c.displayName for c in contacts}
+        return list([cls(op.created_at, contact_map[op.param2]) for op in ops])
 
 
 class MessageReadCommandHook(HooksTracerWrapper):
@@ -37,13 +57,16 @@ class MessageReadCommandHook(HooksTracerWrapper):
         if not (reply_message_id := msg.relatedMessageId):
             return
 
-        operations = get_read_message_ops(reply_message_id)
-        mids: list[str] = [op.param2 for op in operations]
-        contacts: list[Contact] = bot.getContacts(mids)
+        readers = MessageReader.from_ops(
+            get_read_message_ops(reply_message_id), bot
+        )
+        if not readers:
+            bot.replyMessage(msg, "既読をつけた人はいません😭")
+            return
+
         bot.replyMessage(
             msg,
-            "既読確認😉\n\n"
-            + "\n".join([f"・{c.displayName}" for c in contacts]),
+            "既読確認😉\n\n" + "\n".join([f"・{r.name}" for r in readers]),
         )
 
     @tracer.Command(
@@ -57,18 +80,19 @@ class MessageReadCommandHook(HooksTracerWrapper):
         if not (reply_message_id := msg.relatedMessageId):
             return
 
-        operations = get_read_message_ops(reply_message_id)
-        mids: list[str] = [op.param2 for op in operations]
-        contacts: list[Contact] = bot.getContacts(mids)
+        readers = MessageReader.from_ops(
+            get_read_message_ops(reply_message_id), bot
+        )
+        if not readers:
+            bot.replyMessage(msg, "既読をつけた人はいません😭")
+            return
+
         bot.replyMessage(
             msg,
             (
                 "既読確認😉\n\n"
                 + "\n".join(
-                    [
-                        f"・{c.displayName}\n{op.created_at}\n"
-                        for op, c in zip(operations, contacts)
-                    ]
+                    [f"・{r.name}\n{r.created_at}\n" for r in readers]
                 ).strip()
             ),
         )
