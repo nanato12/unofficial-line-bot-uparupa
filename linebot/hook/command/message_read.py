@@ -29,7 +29,7 @@ class MessageReader:
     ) -> list[MessageReader]:
         contacts: list[Contact] = bot.getContacts([op.param2 for op in ops])
         contact_map: dict[str, str] = {c.mid: c.displayName for c in contacts}
-        return list([cls(op.created_at, contact_map[op.param2]) for op in ops])
+        return [cls(op.created_at, contact_map[op.param2]) for op in ops]
 
 
 class MessageReadCommandHook(HooksTracerWrapper):
