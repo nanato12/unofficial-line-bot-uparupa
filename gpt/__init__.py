@@ -19,7 +19,7 @@ class GPT:
         self.messages = []
 
     def create(self) -> str:
-        return ChatCompletion.create(
+        return ChatCompletion.create(  # type: ignore [no-any-return]
             model=self.model,
             messages=[
                 m.build() for m in self.initialize_messages + self.messages

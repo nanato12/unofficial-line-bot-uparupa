@@ -20,7 +20,7 @@ class HooksTracerWrapper(HooksTracer):
             )
         ]
 
-    def addPermission(self, mid: str, permission: str) -> bool:
+    def addPermission(self, mid: str, permission: Authority) -> bool:
         authority = Authority(int(permission))
         u = get_or_create_user_from_mid(mid, self.cl)
         if u.authority == authority:
@@ -29,7 +29,7 @@ class HooksTracerWrapper(HooksTracer):
         u.save()
         return True
 
-    def change_permission(self, mid: str, permission: str) -> bool:
+    def change_permission(self, mid: str, permission: Authority) -> bool:
         return self.addPermission(mid, permission)
 
     def genHelp(
@@ -37,7 +37,7 @@ class HooksTracerWrapper(HooksTracer):
         prefix: Optional[str] = None,
         user_mid: Optional[str] = None,
         msg: Any = None,
-    ):
+    ) -> str:
         return "\n\n".join(
             [h.build_message() for h in self.generate_command_helps()]
         )
@@ -46,9 +46,9 @@ class HooksTracerWrapper(HooksTracer):
         return [self.gen_function_help(f) for f in self.cmdFuncs]
 
     def gen_function_help(self, func: Callable[[Any], Any]) -> CommandHelp:
-        prefix = self.prefixes[0] if self.prefixes and func.prefixes else ""
+        prefix = self.prefixes[0] if self.prefixes and func.prefixes else ""  # type: ignore [attr-defined]
         if doc := func.__doc__:
             lines = [line.strip() for line in doc.strip().split("\n")]
         else:
             lines = []
-        return CommandHelp(prefix, [func.__name__] + func.alt, lines)
+        return CommandHelp(prefix, [func.__name__] + func.alt, lines)  # type: ignore [attr-defined]
