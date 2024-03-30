@@ -1,4 +1,5 @@
 from linebot.hook.operation import (  # noqa: F401
+    op_25_send_message,
     op_26_receive_message,
     op_30_receive_announcement,
     op_55_notified_read_message,
