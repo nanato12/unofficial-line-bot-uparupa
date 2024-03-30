@@ -138,3 +138,9 @@ run.pid
 
 # test
 /*test*.py
+
+# CHRLINE secret data
+/.data
+/.e2eeKeys
+/.images
+/.database
