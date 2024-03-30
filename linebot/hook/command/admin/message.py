@@ -18,10 +18,14 @@ class AdminMessageCommandHook(HooksTracerWrapper):
     @tracer.Command(permissions=[Authority.ADMIN])
     def msg(self, msg: Message, bot: CHRLINE) -> None:
         """
-        テスト
+        メッセージIDを返します。
         """
 
-        bot.replyMessage(msg, "ok")
+        if reply_message_id := msg.relatedMessageId:
+            bot.replyMessage(msg, reply_message_id)
+            return
+
+        bot.replyMessage(msg, msg.id)
 
     @tracer.Command(permissions=[Authority.ADMIN])
     def test(self, msg: Message, bot: CHRLINE) -> None:
