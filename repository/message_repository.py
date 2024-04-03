@@ -12,3 +12,7 @@ def find_user_group_last_message(mid: str, gid: str) -> Optional[Message]:
         .order_by(desc(Message.created_at))
         .first()
     )
+
+
+def get_partial_match_messages(word: str) -> list[Message]:
+    return Message.query.where(Message.text.like(f"%{word}%")).all()
