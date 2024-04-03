@@ -6,6 +6,7 @@ from linebot.hook.command import (  # noqa: F401
     emoji,
     enjoyment,
     keyword,
+    message,
     message_read,
     ranking,
     user_profile,
