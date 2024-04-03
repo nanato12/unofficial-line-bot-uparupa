@@ -13,7 +13,7 @@ def get_read_message_ops(message_id: str) -> list[Operation]:
     return (  # type: ignore[no-any-return]
         Operation.query.filter(Operation.type == OpType.NOTIFIED_READ_MESSAGE)
         .filter(Operation.param1 == message.to)
-        .filter(Operation.param1 != message._from)
+        .filter(Operation.param2 != message._from)
         .filter(Operation.created_time >= message.create_time)
         .group_by(Operation.param2)
         .with_entities(
