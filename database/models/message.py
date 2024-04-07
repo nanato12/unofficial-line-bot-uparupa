@@ -40,6 +40,19 @@ class Message(Base):
         "Location", backref=backref("message", uselist=False)
     )
 
+    def to_thrift_message(self) -> ThriftMessage:
+        m = ThriftMessage(
+            id=self.message_id,
+            _from=self._from,
+            to=self.to,
+            toType=self.to_type,
+            contentMetadata=self.content_metadata,
+            relatedMessageId=self.relation_message_id,
+        )
+        m.opType = self.op_type
+        m.isE2EE = self.is_e2ee
+        return m
+
     @classmethod
     def from_line_message(cls, msg: ThriftMessage) -> Message:
         m = cls()
