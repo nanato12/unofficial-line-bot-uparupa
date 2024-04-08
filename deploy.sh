@@ -3,7 +3,7 @@
 # activate python venv
 . venv/bin/activate
 
-pip uninstall -r requirements.txt -y
+pip uninstall -y CHRLINE
 pip install -r requirements.txt
 
 # migrate database
