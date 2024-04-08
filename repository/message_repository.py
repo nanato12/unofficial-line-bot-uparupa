@@ -18,10 +18,10 @@ def get_partial_match_messages(word: str) -> list[Message]:
     return Message.query.where(Message.text.like(f"%{word}%")).all()  # type: ignore[no-any-return]
 
 
-def get_mention_message(
+def c(
     mid: str, to: str, exclude_message_ids: list[int]
 ) -> list[Message]:
-    return (
+    return (  # type: ignore [no-any-return]
         Message.query.filter(Message.to == to)
         .filter(Message._from != mid)
         .filter(Message.content_metadata.like("%MENTIONEES%"))
