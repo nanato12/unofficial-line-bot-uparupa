@@ -146,3 +146,4 @@ run.pid
 /.database
 /.e2eeGroupKeys
 /.e2eePublicKeys
+/.refreshToken
