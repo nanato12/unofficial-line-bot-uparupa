@@ -1,1 +1,1 @@
-from linebot.hook.content import text_message  # noqa: F401
+from linebot.hook.content import contact, text_message  # noqa: F401
